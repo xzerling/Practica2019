@@ -37,6 +37,7 @@ public class Menu
     public void printExit() 
     {
         System.out.println("Saliendo del sistema de registro de equipos.");
+        System.out.println("Álvaro Elgueda Labra - Univerisad de Talca.");
         System.out.println("Arauco 2019.");
     }
 
@@ -74,6 +75,7 @@ public class Menu
         System.out.println("8. C.Transversal");
         System.out.println("9. Nivel TADB2");
         System.out.println("10. Nivel TADB3");
+        System.out.println("0. Volver menu anterior");
     }
     
     public void printOpciones()
