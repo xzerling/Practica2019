@@ -297,22 +297,65 @@ public class Sistema
     {
         while (opcion != 0)
         {
-            this.menu.mainMenu();
+            this.menu.menuPrincipal();
             System.out.println("");
             System.out.print("Elegir una opción: ");
             System.out.println("");
             this.opcion = this.lector.leerEntero();
             switch(opcion)
             {
+                //Salir.
                 case 0:
                     this.menu.printExit();
                     break;
+                    
+                //Registrar un equipo.
                 case 1:
                     //this.menu.printIngresarEquipo();
                     lector.buffer();
-                    System.out.print("Elegir una opción: ");
-                    break;
 
+                    //this.menu.printModificarEquipo();
+                    System.out.print("Elegir una opción: ");
+                    int subOpcion = -1;
+                    while(subOpcion != 0)
+                    {
+                        this.menu.printModificarEquipo();
+                        subOpcion = this.lector.leerEntero();
+                        switch(subOpcion)
+                        {
+                            
+                            // Volver al menu anterior
+                            case 0:
+                                System.out.println("Volviendo al menu principal");
+                                break;
+                             // PickUp       
+                            case 1:
+
+                                lector.buffer();
+                             // 2da Prensa  
+                            case 2:
+
+                                lector.buffer();
+                            //3ra Superior
+                            case 3:
+                            //3ra Inferior
+                            case 4:
+                            //Tela Superior
+                            case 5:
+                            //Tela inferior
+                            case 6:
+                            //Manta
+                            case 7:
+                            //C. Transversal
+                            case 8:
+                            //Nivel TADB2
+                            case 9:
+                            //Nivel TADB3
+                            case 10:
+                                break;
+                        }
+                    }
+                        break;
                 case 2:
 
                     if (this.hayEquipos() == false)
@@ -325,8 +368,8 @@ public class Sistema
 
                     //this.menu.printModificarEquipo();
                     System.out.print("Elegir una opción: ");
-                    int subOpcion = -1;
-                    while(subOpcion != 0)
+                    int subOpcionM = -1;
+                    while(subOpcionM != 0)
                     {
                         this.menu.printModificarEquipo();
                         subOpcion = this.lector.leerEntero();
