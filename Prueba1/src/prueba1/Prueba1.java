@@ -7,6 +7,8 @@
 
 package prueba1;
 
+import java.text.ParseException;
+
 /**
  *
  * @author Álvaro Elgueda Labra - Univerisad de Talca.
@@ -17,9 +19,11 @@ public class Prueba1 {
 
     /**
      * @param args the command line arguments
+     * @throws java.text.ParseException
      */
-    public static void main(String[] args) {
-        new Sistema().inicio();
+    public static void main(String[] args) throws ParseException 
+    {
+       new Sistema().newInicio();
     }
     
 }

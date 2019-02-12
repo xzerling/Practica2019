@@ -12,6 +12,9 @@ package prueba1;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
  
 //Librerias de Apache POI.
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -44,6 +47,24 @@ public final class SpreadSheet
 
     // estilo de las celdas con poscion de paños - telas
     private final CellStyle estiloCelda;
+    
+    // estilo de las celdas con poscion de paños - telas
+    private final CellStyle estiloCelda2;
+    
+    //Arraylist de los equipos
+    private ArrayList equipos;
+    
+    
+    Row filaPickUp;
+    Row fila2daPrensa;
+    Row fila3raSuperior;
+    Row fila3raInferior;
+    Row filaTelaSup;
+    Row filaTelaInf;
+    Row filaManta;
+    Row filacTransversal;
+    Row filaTDAB2;
+    Row filaTDAB3;
 
     public SpreadSheet()
     {
@@ -51,8 +72,21 @@ public final class SpreadSheet
         this.hojaTelas = this.libro.createSheet("Equipos actuales");
         this.estiloTitulo = getEstiloTitulo();
         this.estiloCelda = getEstiloCelda();
+        this.estiloCelda2 = getEstiloCelda2();
+        this.equipos = new ArrayList();
         //this.anadeFilaEncabezado();
         this.crearPlantilla();
+        
+        /*
+        this.creaFila(0);
+        this.creaFila(1);
+        this.creaFila(2);
+        this.creaFila(3);
+        this.creaFila(4);
+        this.creaFila(5);
+        this.creaFila(6);
+        this.creaFila(7);
+        */
     }
     
     // crea la fila y celdas del encabezado con el nombre de las columnas
@@ -123,6 +157,7 @@ public final class SpreadSheet
     public OutputStream generaDocumento() throws IOException
     {
         this.ajustaColumnas();
+        this.crearHojaActual(this.equipos);
         final OutputStream outputStream = new FileOutputStream("Telas.xls");
         libro.write(outputStream);
         outputStream.close();
@@ -165,18 +200,20 @@ public final class SpreadSheet
         generaFormulaMejorTiempo(fila);*/
     }
     
+    
+    
     public void crearFilas()
     {
-        Row filaPickUp = this.getNuevaFila();
-        Row fila2daPrensa = this.getNuevaFila();
-        Row fila3raSuperior = this.getNuevaFila();
-        Row fila3raInferior = this.getNuevaFila();
-        Row filaTelaSup = this.getNuevaFila();
-        Row filaTelaInf = this.getNuevaFila();
-        Row filaManta = this.getNuevaFila();
-        Row filacTransversal = this.getNuevaFila();
-        Row filaTDAB2 = this.getNuevaFila();
-        Row filaTDAB3 = this.getNuevaFila();
+        this.filaPickUp = this.getNuevaFila();
+        this.fila2daPrensa = this.getNuevaFila();
+        this.fila3raSuperior = this.getNuevaFila();
+        this.fila3raInferior = this.getNuevaFila();
+        this.filaTelaSup = this.getNuevaFila();
+        this.filaTelaInf = this.getNuevaFila();
+        this.filaManta = this.getNuevaFila();
+        this.filacTransversal = this.getNuevaFila();
+        this.filaTDAB2 = this.getNuevaFila();
+        this.filaTDAB3 = this.getNuevaFila();
         
         Cell Pickup = filaPickUp.createCell(0);
         Cell segundaPrensa = fila2daPrensa.createCell(0);
@@ -213,9 +250,236 @@ public final class SpreadSheet
         
     }
     
+    public boolean crearHojaActual(ArrayList<Equipo> equipos)
+    {
+        System.out.println("creando hoja actual");
+        int cantidad = equipos.size();
+        String prov = "";
+        String posi = "";
+        Date instalado;
+        String estado = "";
+        int dOps;
+        Date cambio;
+        
+        for (int i = 0; i < cantidad; i++)
+        {
+            prov = equipos.get(i).getProveedor();
+            posi = equipos.get(i).getPosi();
+            instalado = equipos.get(i).getFechaIngreso().getTime();
+            estado = equipos.get(i).getEstado();
+            dOps = equipos.get(i).getDiasOp();
+            cambio = equipos.get(i).getFechaSalida().getTime();
+            
+            this.creaFila(i, prov, posi, instalado, estado, dOps, cambio);
+        }
+        return true;
+    }
+    
     public void crearPlantilla()
     {
         this.anadeFilaEncabezado();
         this.crearFilas();
+    }
+    
+    private void creaFila(int i, String pro, String pos, Date inst,
+            String est,int dO, Date cam)
+    {
+        if(i == 0)
+        {
+            this.crearFilaPickup(pro, pos, inst, est, dO, cam);
+        }
+        if(i == 1)
+        {
+            this.crearFila2daPrensa();
+        }
+        if(i == 2)
+        {
+            this.crearFila3raSup();
+        }
+        if(i == 3)
+        {
+            this.crearFila3raInf();
+        }
+        if(i == 4)
+        {
+            this.crearFilaTelaSup();
+        }
+        if(i == 5)
+        {
+            this.crearFilaTelaInf();
+        }
+        if(i == 6)
+        {
+            this.crearFilaManta();
+        }
+        if(i == 7)
+        {
+            this.crearFilaCT();
+        }
+
+    }
+
+    private void crearFilaPickup(String pro, String pos, Date inst,
+            String est,int dO, Date cam) 
+    {
+        Cell prov = this.filaPickUp.createCell(1);
+        Cell posi = this.filaPickUp.createCell(2);
+        Cell instalado = this.filaPickUp.createCell(3);
+        Cell estado = this.filaPickUp.createCell(4);
+        Cell dOps = this.filaPickUp.createCell(5);
+        Cell cambio = this.filaPickUp.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+    }
+
+    private void crearFila2daPrensa() 
+    {
+        Cell prov = this.fila2daPrensa.createCell(1);
+        Cell posi = this.fila2daPrensa.createCell(2);
+        Cell instalado = this.fila2daPrensa.createCell(3);
+        Cell estado = this.fila2daPrensa.createCell(4);
+        Cell dOps = this.fila2daPrensa.createCell(5);
+        Cell cambio = this.fila2daPrensa.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+    }
+
+    private void crearFila3raSup()
+    {
+        Cell prov = this.fila3raSuperior.createCell(1);
+        Cell posi = this.fila3raSuperior.createCell(2);
+        Cell instalado = this.fila3raSuperior.createCell(3);
+        Cell estado = this.fila3raSuperior.createCell(4);
+        Cell dOps = this.fila3raSuperior.createCell(5);
+        Cell cambio = this.fila3raSuperior.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+    }
+
+    private void crearFila3raInf()
+    {
+        Cell prov = this.fila3raInferior.createCell(1);
+        Cell posi = this.fila3raInferior.createCell(2);
+        Cell instalado = this.fila3raInferior.createCell(3);
+        Cell estado = this.fila3raInferior.createCell(4);
+        Cell dOps = this.fila3raInferior.createCell(5);
+        Cell cambio = this.fila3raInferior.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+    }
+
+    private void crearFilaTelaSup()
+    {
+        Cell prov = this.filaTelaSup.createCell(1);
+        Cell posi = this.filaTelaSup.createCell(2);
+        Cell instalado = this.filaTelaSup.createCell(3);
+        Cell estado = this.filaTelaSup.createCell(4);
+        Cell dOps = this.filaTelaSup.createCell(5);
+        Cell cambio = this.filaTelaSup.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+    }
+
+    private void crearFilaTelaInf()
+    {
+        Cell prov = this.filaTelaInf.createCell(1);
+        Cell posi = this.filaTelaInf.createCell(2);
+        Cell instalado = this.filaTelaInf.createCell(3);
+        Cell estado = this.filaTelaInf.createCell(4);
+        Cell dOps = this.filaTelaInf.createCell(5);
+        Cell cambio = this.filaTelaInf.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+    }
+
+    private void crearFilaManta()
+    {
+        Cell prov = this.filaManta.createCell(1);
+        Cell posi = this.filaManta.createCell(2);
+        Cell instalado = this.filaManta.createCell(3);
+        Cell estado = this.filaManta.createCell(4);
+        Cell dOps = this.filaManta.createCell(5);
+        Cell cambio = this.filaManta.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+    }
+
+    private void crearFilaCT()
+    {
+        Cell prov = this.filacTransversal.createCell(1);
+        Cell posi = this.filacTransversal.createCell(2);
+        Cell instalado = this.filacTransversal.createCell(3);
+        Cell estado = this.filacTransversal.createCell(4);
+        Cell dOps = this.filacTransversal.createCell(5);
+        Cell cambio = this.filacTransversal.createCell(6);
+        
+        prov.setCellStyle(estiloCelda2);
+        posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+    }
+
+    private CellStyle getEstiloCelda2() 
+    {
+        final CellStyle cellStyle = libro.createCellStyle();
+        Font font = libro.createFont();
+        cellStyle.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        font.setBold(true);
+        cellStyle.setFont(font);
+        cellStyle.setBorderBottom(BorderStyle.MEDIUM);
+        cellStyle.setBorderLeft(BorderStyle.MEDIUM);
+        cellStyle.setBorderRight(BorderStyle.MEDIUM);
+        cellStyle.setBorderTop(BorderStyle.MEDIUM);
+        return cellStyle;
+    }
+
+    void setEquipos(ArrayList equipos) 
+    {
+        this.equipos = equipos;
     }
 }

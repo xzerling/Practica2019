@@ -137,11 +137,12 @@ public class Equipo
         //System.out.println("*** Codigo: "+this.codigo);
         System.out.println("*** Nombre: "+this.nombre);
         System.out.println("*** Tipo: "+this.tipo);
+        System.out.println("*** Posi: "+this.posi);
         System.out.println("*** Descripcion: "+this.descripcion);
-        System.out.println("*** FechaIngreso: "+this.fechaIngreso);
-        if (this.fechaSalida != null)
-            System.out.println("*** FechaSalida: "+this.fechaSalida);
-        System.out.println("*** FechaSalida: El equipo se encuentra en funcionamiento");
+        System.out.println("*** FechaIngreso: "+this.formatoCalendario(this.fechaIngreso));
+        System.out.println("*** Estado: " + this.estado);
+        System.out.println("*** Dias Operativos: "+this.diasOp());
+        System.out.println("*** FechaSalida: "+this.formatoCalendario(this.fechaSalida));
         System.out.println("**********************************************************");
 
     }
@@ -158,7 +159,7 @@ public class Equipo
         long t1 = this.fechaIngreso.getTimeInMillis();
         long t2 = Calendar.getInstance().getTimeInMillis();
         
-        int dias = (int) ((t2-t1)/1000/60/60/24);
+        int dias = (int) ((t2-t1)/1000/60/60/24+1);
         return dias;
     }
     
