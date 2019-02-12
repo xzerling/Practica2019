@@ -5,7 +5,7 @@
  */
 
 
-package prueba1;
+package javaapplication1;
 
 import java.io.IOException;
 import java.text.ParseException;

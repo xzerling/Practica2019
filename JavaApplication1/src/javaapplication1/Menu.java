@@ -4,7 +4,7 @@
  * Arauco 2019 - Practica Profesional.
  */
 
-package prueba1;
+package javaapplication1;
 
 /**
  *

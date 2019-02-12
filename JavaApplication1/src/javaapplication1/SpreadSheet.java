@@ -6,7 +6,7 @@
  * Álvaro Elgueda Labra - Univerisad de Talca.
  */
 
-package prueba1;
+package javaapplication1;
 
 //Librerias para el manejo de archivos.
 import java.io.FileOutputStream;
