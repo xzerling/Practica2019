@@ -255,6 +255,7 @@ public final class SpreadSheet
     {
         //System.out.println("creando hoja actual");
         int cantidad = equipos.size();
+        int codInt;
         String prov = "";
         String posi = "";
         String instalado = "";
@@ -266,15 +267,17 @@ public final class SpreadSheet
         
         for (int i = 0; i < cantidad; i++)
         {
+            codInt = equipos.get(i).getCodInterno();
             prov = equipos.get(i).getProveedor();
             posi = equipos.get(i).getPosi();
             instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
             estado = equipos.get(i).getEstado();
             dOps = equipos.get(i).getDiasOp();
-            cambio = df.format(equipos.get(i).getFechaSalida().getTime());
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
             System.out.println("fecha dentro del for: "+cambio);
             System.out.println("i: "+dOps);
-            this.creaFila(i, prov, posi, instalado, estado, dOps, cambio);
+            this.creaFila(codInt, prov, posi, instalado, estado, dOps, cambio);
         }
         return true;
     }
@@ -294,31 +297,31 @@ public final class SpreadSheet
         }
         if(i == 1)
         {
-            this.crearFila2daPrensa();
+            this.crearFila2daPrensa(pro, pos, inst, est, dO, cam);
         }
         if(i == 2)
         {
-            this.crearFila3raSup();
+            this.crearFila3raSup(pro, pos, inst, est, dO, cam);
         }
         if(i == 3)
         {
-            this.crearFila3raInf();
+            this.crearFila3raInf(pro, pos, inst, est, dO, cam);
         }
         if(i == 4)
         {
-            this.crearFilaTelaSup();
+            this.crearFilaTelaSup(pro, pos, inst, est, dO, cam);
         }
         if(i == 5)
         {
-            this.crearFilaTelaInf();
+            this.crearFilaTelaInf(pro, pos, inst, est, dO, cam);
         }
         if(i == 6)
         {
-            this.crearFilaManta();
+            this.crearFilaManta(pro, pos, inst, est, dO, cam);
         }
         if(i == 7)
         {
-            this.crearFilaCT();
+            this.crearFilaCT(pro, pos, inst, est, dO, cam);
         }
 
     }
@@ -348,7 +351,8 @@ public final class SpreadSheet
         cambio.setCellValue(cam);
     }
 
-    private void crearFila2daPrensa() 
+    private void crearFila2daPrensa(String pro, String pos, String inst,
+            String est,int dO, String cam)  
     {
         Cell prov = this.fila2daPrensa.createCell(1);
         Cell posi = this.fila2daPrensa.createCell(2);
@@ -362,10 +366,18 @@ public final class SpreadSheet
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
-        cambio.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);       
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
     }
 
-    private void crearFila3raSup()
+    private void crearFila3raSup(String pro, String pos, String inst,
+            String est,int dO, String cam) 
     {
         Cell prov = this.fila3raSuperior.createCell(1);
         Cell posi = this.fila3raSuperior.createCell(2);
@@ -380,9 +392,17 @@ public final class SpreadSheet
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
     }
 
-    private void crearFila3raInf()
+    private void crearFila3raInf(String pro, String pos, String inst,
+            String est,int dO, String cam) 
     {
         Cell prov = this.fila3raInferior.createCell(1);
         Cell posi = this.fila3raInferior.createCell(2);
@@ -397,9 +417,17 @@ public final class SpreadSheet
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
     }
 
-    private void crearFilaTelaSup()
+    private void crearFilaTelaSup(String pro, String pos, String inst,
+            String est,int dO, String cam) 
     {
         Cell prov = this.filaTelaSup.createCell(1);
         Cell posi = this.filaTelaSup.createCell(2);
@@ -414,9 +442,17 @@ public final class SpreadSheet
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
     }
 
-    private void crearFilaTelaInf()
+    private void crearFilaTelaInf(String pro, String pos, String inst,
+            String est,int dO, String cam) 
     {
         Cell prov = this.filaTelaInf.createCell(1);
         Cell posi = this.filaTelaInf.createCell(2);
@@ -431,9 +467,17 @@ public final class SpreadSheet
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
     }
 
-    private void crearFilaManta()
+    private void crearFilaManta(String pro, String pos, String inst,
+            String est,int dO, String cam) 
     {
         Cell prov = this.filaManta.createCell(1);
         Cell posi = this.filaManta.createCell(2);
@@ -448,9 +492,17 @@ public final class SpreadSheet
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
     }
 
-    private void crearFilaCT()
+    private void crearFilaCT(String pro, String pos, String inst,
+            String est,int dO, String cam) 
     {
         Cell prov = this.filacTransversal.createCell(1);
         Cell posi = this.filacTransversal.createCell(2);
@@ -465,6 +517,13 @@ public final class SpreadSheet
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
     }
 
 
