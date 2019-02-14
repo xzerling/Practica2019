@@ -8,7 +8,6 @@ package prueba1;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  *
@@ -18,8 +17,9 @@ import java.util.Date;
 
 public class Equipo
 {
-    private int codigoZap;
+    private int codigoSap;
     private int diasOp;
+    private int codInterno;
     private String tag;
     private String nombre;
     private String tipo;
@@ -36,19 +36,27 @@ public class Equipo
     }
 
     public Equipo(int codigo, String nombre, String tipo, String descripcion, Calendar fechaIngreso) {
-        this.codigoZap = codigo;
+        this.codigoSap = codigo;
         this.nombre = nombre;
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.fechaIngreso = fechaIngreso;
     }
 
-    public int getCodigoZap() {
-        return codigoZap;
+    public int getCodigoSap() {
+        return codigoSap;
     }
 
-    public void setCodigoZap(int codigoZap) {
-        this.codigoZap = codigoZap;
+    public int getCodInterno() {
+        return codInterno;
+    }
+
+    public void setCodInterno(int codInterno) {
+        this.codInterno = codInterno;
+    }
+    
+    public void setCodigoSap(int codigoSap) {
+        this.codigoSap = codigoSap;
     }
 
     public String getProveedor() {
@@ -60,7 +68,7 @@ public class Equipo
     }
 
     public int getDiasOp() {
-        return diasOp;
+        return this.diasOp;
     }
 
     public void setDiasOp(int diasOp) {
@@ -141,8 +149,15 @@ public class Equipo
         System.out.println("*** Descripcion: "+this.descripcion);
         System.out.println("*** FechaIngreso: "+this.formatoCalendario(this.fechaIngreso));
         System.out.println("*** Estado: " + this.estado);
-        System.out.println("*** Dias Operativos: "+this.diasOp());
-        System.out.println("*** FechaSalida: "+this.formatoCalendario(this.fechaSalida));
+        System.out.println("*** Dias Operativos: "+this.actualizarDiasOp());
+        if(this.fechaSalida != null)
+        {
+            System.out.println("*** FechaSalida: "+this.formatoCalendario(this.fechaSalida));
+        }
+        else
+        {
+            System.out.println("*** FechaSalida: Error");
+        }
         System.out.println("**********************************************************");
 
     }
@@ -154,12 +169,13 @@ public class Equipo
         return fecha;
     }
     
-    private int diasOp()
+    public int actualizarDiasOp()
     {
         long t1 = this.fechaIngreso.getTimeInMillis();
         long t2 = Calendar.getInstance().getTimeInMillis();
         
-        int dias = (int) ((t2-t1)/1000/60/60/24+1);
+        int dias = (int) ((t2-t1)/1000/60/60/24)+1;
+        this.diasOp = dias;
         return dias;
     }
     
@@ -168,7 +184,7 @@ public class Equipo
     public void printEquipo()
     {
         System.out.println("**********************************************************");
-        System.out.println("*** Sap: " + this.codigoZap);
+        System.out.println("*** Sap: " + this.codigoSap);
         System.out.println("*** Nombre: " + this.nombre);
         System.out.println("*** Proveedor: " + this.proveedor);
         System.out.println("*** Fecha de ingreso: " + this.formatoCalendario(this.fechaIngreso));

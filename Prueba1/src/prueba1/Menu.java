@@ -96,4 +96,31 @@ public class Menu
         System.out.println("0. Salir");
     }
     
+    public void printError()
+    {
+        System.out.println("");
+        System.out.println("*************************************************");
+        System.out.println("* Error en la generacion del Archivo.");
+        System.out.println("*************************************************");
+        System.out.println("");
+    }
+    public void printExito()
+    {
+        System.out.println("");
+        System.out.println("*************************************************");
+        System.out.println("* Archivo generado exitosamente.");
+        System.out.println("*************************************************");
+        System.out.println("");
+    }
+    
+        public void printErrorFecha()
+    {
+        System.out.println("");
+        System.out.println("*************************************************");
+        System.out.println("* Error en la Fecha ingresada.");
+        System.out.println("* Debe ser modificada.");
+        System.out.println("*************************************************");
+        System.out.println("");
+    }
+    
 }

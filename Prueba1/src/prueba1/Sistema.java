@@ -50,7 +50,7 @@ public class Sistema
             for (int i = 0; i < this.equipos.size(); i++)
             {
                 Equipo equipo = (Equipo) this.equipos.get(i);
-                if (equipo.getCodigoZap() == cod)
+                if (equipo.getCodigoSap() == cod)
                 {
                     return equipo;
                 }
@@ -76,7 +76,8 @@ public class Sistema
         {
             for (int i = 0; i < this.equipos.size(); i++)
             {
-                System.out.println("Maquina "+i+1+": ");
+                int n = i+1;
+                System.out.println("Maquina n°"+n+": ");
                 Equipo equipo = (Equipo) this.equipos.get(i);
                 equipo.print();
                 System.out.println("");
@@ -95,7 +96,7 @@ public class Sistema
             for (int i = 0; i < this.equipos.size(); i++)
             {
                 Equipo equipo = (Equipo) this.equipos.get(i);
-                if (equipo.getCodigoZap() == cod)
+                if (equipo.getCodigoSap() == cod)
                 {
                     this.equipos.remove(equipo);
                 }
@@ -150,30 +151,9 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo pickUp = this.creador.crearPickUp();
-                                System.out.println("Proveedor: ");
-                                String proveedor = this.lector.ingresarTexto();
-                                pickUp.setProveedor(proveedor);
-                                System.out.println("Posi: ");
-                                String posi = this.lector.ingresarTexto();
-                                pickUp.setPosi(posi);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                pickUp.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado = this.lector.ingresarTexto();
-                                pickUp.setEstado(estado);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date = this.sdf.parse(fecha);
-                                Calendar calendar = Calendar.getInstance();
-                                calendar.setTime(date);
-                                pickUp.setFechaSalida(calendar);
-                                                                
+                                pickUp = this.completarEquipo(pickUp);
                                 this.equipos.add(pickUp);
                                 break;
-                                
                                 
                              // 2da Prensa  
                             case 2:
@@ -181,27 +161,7 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo segPrensa = this.creador.crear2daPrensa();
-                                System.out.println("Proveedor: ");
-                                String proveedor2 = this.lector.ingresarTexto();
-                                segPrensa.setProveedor(proveedor2);
-                                System.out.println("Posi: ");
-                                String posi2 = this.lector.ingresarTexto();
-                                segPrensa.setPosi(posi2);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                segPrensa.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado2 = this.lector.ingresarTexto();
-                                segPrensa.setEstado(estado2);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha2 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date2 = this.sdf.parse(fecha2);
-                                Calendar calendar2 = Calendar.getInstance();
-                                calendar2.setTime(date2);
-                                segPrensa.setFechaSalida(calendar2);
-                                                                
+                                segPrensa = this.completarEquipo(segPrensa);
                                 this.equipos.add(segPrensa);
                                 break;
                                 
@@ -211,28 +171,7 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo terSup = this.creador.crear3raSuperior();
-                                System.out.println("Proveedor: ");
-                                String proveedor3 = this.lector.ingresarTexto();
-                                terSup.setProveedor(proveedor3);
-                                System.out.println("Posi: ");
-                                String posi3 = this.lector.ingresarTexto();
-                                terSup.setPosi(posi3);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                terSup.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado3 = this.lector.ingresarTexto();
-                                terSup.setEstado(estado3);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha3 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date3 = this.sdf.parse(fecha3);
-                                Calendar calendar3 = Calendar.getInstance();
-                                calendar3.setTime(date3);
-                                terSup.setFechaSalida(calendar3);
-                                
-                                                                
+                                terSup = this.completarEquipo(terSup);
                                 this.equipos.add(terSup);
                                 break;
                                 
@@ -243,28 +182,7 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo terInf = this.creador.crear3raInferior();
-                                System.out.println("Proveedor: ");
-                                String proveedor4 = this.lector.ingresarTexto();
-                                terInf.setProveedor(proveedor4);
-                                System.out.println("Posi: ");
-                                String posi4 = this.lector.ingresarTexto();
-                                terInf.setPosi(posi4);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                terInf.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado4 = this.lector.ingresarTexto();
-                                terInf.setEstado(estado4);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha4 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date4 = this.sdf.parse(fecha4);
-                                Calendar calendar4 = Calendar.getInstance();
-                                calendar4.setTime(date4);
-                                terInf.setFechaSalida(calendar4);
-                                
-                                                                
+                                terInf = this.completarEquipo(terInf);
                                 this.equipos.add(terInf);
                                 break;
                                 
@@ -275,28 +193,7 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo telaSup = this.creador.crearTelaSuperior();
-                                System.out.println("Proveedor: ");
-                                String proveedor5 = this.lector.ingresarTexto();
-                                telaSup.setProveedor(proveedor5);
-                                System.out.println("Posi: ");
-                                String posi5 = this.lector.ingresarTexto();
-                                telaSup.setPosi(posi5);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                telaSup.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado5 = this.lector.ingresarTexto();
-                                telaSup.setEstado(estado5);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha5 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date5 = this.sdf.parse(fecha5);
-                                Calendar calendar5 = Calendar.getInstance();
-                                calendar5.setTime(date5);
-                                telaSup.setFechaSalida(calendar5);
-                                
-                                                                
+                                telaSup = this.completarEquipo(telaSup);
                                 this.equipos.add(telaSup);
                                 break;
                                 
@@ -307,27 +204,7 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo telaInf = this.creador.crearTelaInferior();
-                                System.out.println("Proveedor: ");
-                                String proveedor6 = this.lector.ingresarTexto();
-                                telaInf.setProveedor(proveedor6);
-                                System.out.println("Posi: ");
-                                String posi6 = this.lector.ingresarTexto();
-                                telaInf.setPosi(posi6);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                telaInf.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado6 = this.lector.ingresarTexto();
-                                telaInf.setEstado(estado6);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha6 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date6 = this.sdf.parse(fecha6);
-                                Calendar calendar6 = Calendar.getInstance();
-                                calendar6.setTime(date6);
-                                telaInf.setFechaSalida(calendar6);
-                                                                
+                                telaInf = this.completarEquipo(telaInf);
                                 this.equipos.add(telaInf);
                                 break;
                                 
@@ -338,27 +215,7 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo manta = this.creador.crearManta();
-                                System.out.println("Proveedor: ");
-                                String proveedor7 = this.lector.ingresarTexto();
-                                manta.setProveedor(proveedor7);
-                                System.out.println("Posi: ");
-                                String posi7 = this.lector.ingresarTexto();
-                                manta.setPosi(posi7);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                manta.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado7 = this.lector.ingresarTexto();
-                                manta.setEstado(estado7);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha7 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date7 = this.sdf.parse(fecha7);
-                                Calendar calendar7 = Calendar.getInstance();
-                                calendar7.setTime(date7);
-                                manta.setFechaSalida(calendar7);
-                                                                
+                                manta = this.completarEquipo(manta);
                                 this.equipos.add(manta);
                                 break;
                                 
@@ -369,29 +226,8 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo cTransversal = this.creador.crearCTrnasversal();
-                                System.out.println("Proveedor: ");
-                                String proveedor8 = this.lector.ingresarTexto();
-                                cTransversal.setProveedor(proveedor8);
-                                System.out.println("Posi: ");
-                                String posi8 = this.lector.ingresarTexto();
-                                cTransversal.setPosi(posi8);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                cTransversal.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado8 = this.lector.ingresarTexto();
-                                cTransversal.setEstado(estado8);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha8 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date8 = this.sdf.parse(fecha8);
-                                Calendar calendar8 = Calendar.getInstance();
-                                calendar8.setTime(date8);
-                                cTransversal.setFechaSalida(calendar8);
-                                
+                                cTransversal = this.completarEquipo(cTransversal);
                                 this.equipos.add(cTransversal);
-
                                 break;
                                 
                             //Nivel TADB2
@@ -401,28 +237,8 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo nTADB2 = this.creador.crearNivelTADB2();
-                                System.out.println("Proveedor: ");
-                                String proveedor9 = this.lector.ingresarTexto();
-                                nTADB2.setProveedor(proveedor9);
-                                String posi9 = this.lector.ingresarTexto();
-                                nTADB2.setPosi(posi9);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                nTADB2.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado9 = this.lector.ingresarTexto();
-                                nTADB2.setEstado(estado9);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha9 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date9 = this.sdf.parse(fecha9);
-                                Calendar calendar9 = Calendar.getInstance();
-                                calendar9.setTime(date9);
-                                nTADB2.setFechaSalida(calendar9);
-                                
+                                nTADB2 = this.completarEquipo(nTADB2);
                                 this.equipos.add(nTADB2);
-
                                 break;
                                 
                             //Nivel TADB3
@@ -432,26 +248,7 @@ public class Sistema
                                 lector.buffer();
                                 
                                 Equipo nTADB3 = this.creador.crearNivelTADB3();
-                                System.out.println("Proveedor: ");
-                                String proveedor10 = this.lector.ingresarTexto();
-                                nTADB3.setProveedor(proveedor10);
-                                String posi10 = this.lector.ingresarTexto();
-                                nTADB3.setPosi(posi10);
-                                System.out.println("Fecha ingresada automaticamete al dia de hoy.");
-                                nTADB3.setFechaIngreso(Calendar.getInstance());
-                                System.out.println("Estado: ");
-                                String estado10 = this.lector.ingresarTexto();
-                                nTADB3.setEstado(estado10);
-                                
-                                System.out.println("Proximo Cambio: ");
-                                System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-                                String fecha10 = this.lector.ingresarTexto();
-                                //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date10 = this.sdf.parse(fecha10);
-                                Calendar calendar10 = Calendar.getInstance();
-                                calendar10.setTime(date10);
-                                nTADB3.setFechaSalida(calendar10);
-                                
+                                nTADB3 = this.completarEquipo(nTADB3);
                                 this.equipos.add(nTADB3);
                                 break;
                         }
@@ -521,17 +318,58 @@ public class Sistema
                     
                 //Exportar datos a excel
                 case 4:
+                    this.hoja.setEquipos(this.equipos);
                     try 
                     {
                         this.hoja.generaDocumento();
+                        this.menu.printExito();
+
                     } 
                     catch (IOException e)
                     {
-                        e.printStackTrace();
+                        this.menu.printError();
                     }
             }
         }
         return true;
+    }
+    
+    
+    private Equipo completarEquipo(Equipo equipo)
+    {
+        
+        
+        System.out.println("Proveedor: ");
+        String pro = this.lector.ingresarTexto();
+        System.out.println("Posi: ");
+        String pos = this.lector.ingresarTexto();
+        System.out.println("Fecha ingresada automaticamete al dia de hoy.");
+        System.out.println("Estado: ");
+        String est = this.lector.ingresarTexto();
+        System.out.println("Proximo Cambio: ");
+        System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
+        String fecha = this.lector.ingresarTexto();
+        
+        
+        equipo.setProveedor(pro);
+        equipo.setPosi(pos);
+        equipo.setFechaIngreso(Calendar.getInstance());
+        equipo.setEstado(est);
+        try
+        {
+            Date date = this.sdf.parse(fecha);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            equipo.setFechaSalida(calendar);
+        }
+        catch(ParseException e)
+        {
+            this.menu.printErrorFecha();
+            equipo.setFechaSalida(null);
+        }
+        
+        
+        return equipo;
     }
 
 
@@ -627,7 +465,7 @@ public class Sistema
                                     {
                                         System.out.println("Escriba el nuevo nombre a asignar.");
                                         int nvoCod = this.lector.leerEntero();
-                                        modEqpCod.setCodigoZap(nvoCod);
+                                        modEqpCod.setCodigoSap(nvoCod);
                                         break;
                                     }
                                 else
