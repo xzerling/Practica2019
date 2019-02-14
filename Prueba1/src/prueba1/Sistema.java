@@ -334,6 +334,7 @@ public class Sistema
         return true;
     }
     
+    
     private Equipo completarEquipo(Equipo equipo)
     {
         

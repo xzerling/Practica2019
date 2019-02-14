@@ -15,16 +15,12 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
  
 //Librerias de Apache POI.
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -263,10 +259,10 @@ public final class SpreadSheet
         int dOps;
         String cambio = "";
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        System.out.println("dias fuera del for: "+equipos.get(0).getDiasOp());
         
         for (int i = 0; i < cantidad; i++)
         {
+            equipos.get(i).actualizarDiasOp();
             codInt = equipos.get(i).getCodInterno();
             prov = equipos.get(i).getProveedor();
             posi = equipos.get(i).getPosi();
@@ -275,8 +271,7 @@ public final class SpreadSheet
             dOps = equipos.get(i).getDiasOp();
             if(equipos.get(i).getFechaSalida() != null){
             cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
-            System.out.println("fecha dentro del for: "+cambio);
-            System.out.println("i: "+dOps);
+            equipos.get(i).print();
             this.creaFila(codInt, prov, posi, instalado, estado, dOps, cambio);
         }
         return true;

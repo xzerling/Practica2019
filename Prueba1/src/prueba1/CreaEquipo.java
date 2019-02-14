@@ -5,8 +5,6 @@
  */
 package prueba1;
 
-import prueba1.Equipo;
-
 /**
  *
  * @author Zerling

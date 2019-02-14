@@ -8,7 +8,6 @@ package prueba1;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  *
@@ -69,7 +68,7 @@ public class Equipo
     }
 
     public int getDiasOp() {
-        return diasOp;
+        return this.diasOp;
     }
 
     public void setDiasOp(int diasOp) {
@@ -150,7 +149,7 @@ public class Equipo
         System.out.println("*** Descripcion: "+this.descripcion);
         System.out.println("*** FechaIngreso: "+this.formatoCalendario(this.fechaIngreso));
         System.out.println("*** Estado: " + this.estado);
-        System.out.println("*** Dias Operativos: "+this.diasOp());
+        System.out.println("*** Dias Operativos: "+this.actualizarDiasOp());
         if(this.fechaSalida != null)
         {
             System.out.println("*** FechaSalida: "+this.formatoCalendario(this.fechaSalida));
@@ -170,12 +169,13 @@ public class Equipo
         return fecha;
     }
     
-    private int diasOp()
+    public int actualizarDiasOp()
     {
         long t1 = this.fechaIngreso.getTimeInMillis();
         long t2 = Calendar.getInstance().getTimeInMillis();
         
-        int dias = (int) ((t2-t1)/1000/60/60/24+1);
+        int dias = (int) ((t2-t1)/1000/60/60/24)+1;
+        this.diasOp = dias;
         return dias;
     }
     
