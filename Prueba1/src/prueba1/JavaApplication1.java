@@ -9,6 +9,7 @@ package prueba1;
  *
  * @author Zerling
  */
+import java.io.IOException;
 import java.text.ParseException;
 
 /**
@@ -23,7 +24,7 @@ public class JavaApplication1{
      * @param args the command line arguments
      * @throws java.text.ParseException
      */
-    public static void main(String[] args) throws ParseException 
+    public static void main(String[] args) throws ParseException, IOException 
     {
        new Sistema().newInicio();
     }

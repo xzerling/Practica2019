@@ -9,18 +9,23 @@
 package prueba1;
 
 //Librerias para el manejo de archivos.
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
  
 //Librerias de Apache POI.
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -37,7 +42,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 public final class SpreadSheet 
 {
     // documento con las hojas de calculo
-    private final Workbook libro;
+    private Workbook libro;
 
     // las hojas de calculo
     private final Sheet hojaActual;
@@ -107,6 +112,14 @@ public final class SpreadSheet
         this.creaFila(6);
         this.creaFila(7);
         */
+    }
+
+    public Workbook getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Workbook libro) {
+        this.libro = libro;
     }
     
     // crea la fila y celdas del encabezado con el nombre de las columnas
@@ -194,10 +207,9 @@ public final class SpreadSheet
     {
         this.ajustaColumnas();
         this.crearHojaActual(this.equipos);
-        final OutputStream outputStream = new FileOutputStream("Telas.xls");
+        final OutputStream outputStream = new FileOutputStream("BD.xls");
         try 
         {
-            
             libro.write(outputStream);
             outputStream.close();
             
@@ -293,7 +305,7 @@ public final class SpreadSheet
             dOps = equipos.get(i).getDiasOp();
             if(equipos.get(i).getFechaSalida() != null){
             cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
-            equipos.get(i).print();
+            //equipos.get(i).print();
             pop = equipos.get(i).getPlanOperativo();
             this.creaFila(codInt, prov, posi, instalado, estado, dOps, cambio, pop);
         }
@@ -648,4 +660,54 @@ public final class SpreadSheet
     {
         this.equipos = equipos;
     }
+    
+    /*
+    public void cargarBD() throws FileNotFoundException, IOException
+    {
+        String nombreArchivo = "BD.xls";
+        String direccion = "";
+        
+        try (FileInputStream file = new FileInputStream("BD.xls"))
+        {
+            
+            Workbook workbook = new HSSFWorkbook(file);
+            Sheet hojaActual = workbook.getSheetAt(0);
+            Sheet hojaHistoricaPickUp = workbook.getSheetAt(1);
+            Sheet hojaHistorica2daPrensa = workbook.getSheetAt(2);
+            Sheet hojaHistorica3raSuperior = workbook.getSheetAt(3);
+            Sheet hojaHistorica3raInferior = workbook.getSheetAt(4);
+            Sheet hojaHistorica3TelaSup = workbook.getSheetAt(5);
+            Sheet hojaHistorica3TelaInf = workbook.getSheetAt(6);
+            Sheet hojaHistoricaManta = workbook.getSheetAt(7);
+            Sheet hojaHistoricaTransversal = workbook.getSheetAt(8);
+            Sheet hojaHistoricaExHumedo = workbook.getSheetAt(9);
+            Sheet hojaHistoricaExSeco = workbook.getSheetAt(10);
+            
+            int i = 0;
+            int j = 0;
+            Iterator iterator = hojaActual.iterator();
+            
+            DataFormatter formato = new DataFormatter();
+            System.out.println("Proveedor: "+formato.formatCellValue(hojaActual.getRow(i+1).getCell(i+1)));
+            System.out.println("Instalado: "+formato.formatCellValue(hojaActual.getRow(i+1).getCell(i+2)));
+            System.out.println("Estado: "+formato.formatCellValue(hojaActual.getRow(i+1).getCell(i+3)));
+            System.out.println("DOP: "+formato.formatCellValue(hojaActual.getRow(i+1).getCell(i+4)));
+            System.out.println("Cambio: "+formato.formatCellValue(hojaActual.getRow(i+1).getCell(i+5)));
+            System.out.println("Plan OP: "+formato.formatCellValue(hojaActual.getRow(i+1).getCell(i+6)));
+            
+            
+            /*while(iterator.hasNext())
+            {
+                Row nextRow = (Row) iterator.next();
+                Iterator cellIterator = nextRow.cellIterator();
+                while(cellIterator.hasNext())
+                {
+                    Cell cell = (Cell) cellIterator.next();
+                    String cont = formato.formatCellValue(cell);
+                    System.out.println("celda: "+cont);
+                }
+            }
+            
+        }
+    }*/
 }

@@ -25,19 +25,24 @@ public class Sistema
     private Lector lector;
     private Menu menu;
     private CreaEquipo creador;
-    private ArrayList equipos;
+    //private ArrayList equipos;
+    private Datos datos;
+    private Seeder seeder;
     private int opcion;
-    private SpreadSheet hoja;
+    private SpreadSheet libro;
     private SimpleDateFormat sdf;
 
     public Sistema()
     {
         this.lector = new Lector();
         this.menu = new Menu();
-        this.equipos = new ArrayList();
+       //this.equipos = new ArrayList();
+        this.datos = new Datos();
+        this.seeder = new Seeder();
         this.creador = new CreaEquipo();
         this.opcion = -1;
-        this.hoja = new SpreadSheet();
+        this.libro = new SpreadSheet();
+        
         this.sdf = new SimpleDateFormat("dd-MM-yyyy");
     }
     
@@ -45,11 +50,11 @@ public class Sistema
     
     private Equipo buscarEquipo(int cod)
     {
-        if(this.equipos.size()>0)
+        if(this.datos.getActual().size()>0)
         {
-            for (int i = 0; i < this.equipos.size(); i++)
+            for (int i = 0; i < this.datos.getActual().size(); i++)
             {
-                Equipo equipo = (Equipo) this.equipos.get(i);
+                Equipo equipo = (Equipo) this.datos.getActual().get(i);
                 if (equipo.getCodigoSap() == cod)
                 {
                     return equipo;
@@ -67,18 +72,18 @@ public class Sistema
     
     private boolean hayEquipos()
     {
-            return this.equipos.size()>0;
+            return this.datos.getActual().size()>0;
     }
 
     private void listarEquipos()
     {
-        if(this.equipos.size()>0)
+        if(this.datos.getActual().size()>0)
         {
-            for (int i = 0; i < this.equipos.size(); i++)
+            for (int i = 0; i < this.datos.getActual().size(); i++)
             {
                 int n = i+1;
                 System.out.println("Maquina n°"+n+": ");
-                Equipo equipo = (Equipo) this.equipos.get(i);
+                Equipo equipo = (Equipo) this.datos.getActual().get(i);
                 equipo.print();
                 System.out.println("");
             }
@@ -91,14 +96,14 @@ public class Sistema
     
     private boolean borrarEquipo(int cod)
     {
-        if(this.equipos.size()>0)
+        if(this.datos.getActual().size()>0)
         {
-            for (int i = 0; i < this.equipos.size(); i++)
+            for (int i = 0; i < this.datos.getActual().size(); i++)
             {
-                Equipo equipo = (Equipo) this.equipos.get(i);
+                Equipo equipo = (Equipo) this.datos.getActual().get(i);
                 if (equipo.getCodigoSap() == cod)
                 {
-                    this.equipos.remove(equipo);
+                    this.datos.getActual().remove(equipo);
                 }
                 return true;
             }
@@ -113,8 +118,10 @@ public class Sistema
     }
 
     
-    public boolean newInicio() throws ParseException
+    public boolean newInicio() throws ParseException, IOException
     {
+        this.menu.ppino();
+        this.datos.setActual(this.seeder.cargarArray());
         while (opcion != 0)
         {
             this.menu.menuPrincipal();
@@ -152,7 +159,7 @@ public class Sistema
                                 
                                 Equipo pickUp = this.creador.crearPickUp();
                                 pickUp = this.completarEquipo(pickUp);
-                                this.equipos.add(pickUp);
+                                this.datos.getActual().add(pickUp);
                                 break;
                                 
                              // 2da Prensa  
@@ -162,7 +169,7 @@ public class Sistema
                                 
                                 Equipo segPrensa = this.creador.crear2daPrensa();
                                 segPrensa = this.completarEquipo(segPrensa);
-                                this.equipos.add(segPrensa);
+                                this.datos.getActual().add(segPrensa);
                                 break;
                                 
                             //3ra Superior
@@ -172,7 +179,7 @@ public class Sistema
                                 
                                 Equipo terSup = this.creador.crear3raSuperior();
                                 terSup = this.completarEquipo(terSup);
-                                this.equipos.add(terSup);
+                                this.datos.getActual().add(terSup);
                                 break;
                                 
                                 
@@ -183,7 +190,7 @@ public class Sistema
                                 
                                 Equipo terInf = this.creador.crear3raInferior();
                                 terInf = this.completarEquipo(terInf);
-                                this.equipos.add(terInf);
+                                this.datos.getActual().add(terInf);
                                 break;
                                 
                             //Tela Superior
@@ -193,7 +200,7 @@ public class Sistema
                                 
                                 Equipo telaSup = this.creador.crearTelaSuperior();
                                 telaSup = this.completarEquipo(telaSup);
-                                this.equipos.add(telaSup);
+                                this.datos.getActual().add(telaSup);
                                 break;
                                 
                             //Tela inferior
@@ -203,7 +210,7 @@ public class Sistema
                                 
                                 Equipo telaInf = this.creador.crearTelaInferior();
                                 telaInf = this.completarEquipo(telaInf);
-                                this.equipos.add(telaInf);
+                                this.datos.getActual().add(telaInf);
                                 break;
                                 
                             //Manta
@@ -213,7 +220,7 @@ public class Sistema
                                 
                                 Equipo manta = this.creador.crearManta();
                                 manta = this.completarEquipo(manta);
-                                this.equipos.add(manta);
+                                this.datos.getActual().add(manta);
                                 break;
                                 
                             //C. Transversal
@@ -223,7 +230,7 @@ public class Sistema
                                 
                                 Equipo cTransversal = this.creador.crearCTrnasversal();
                                 cTransversal = this.completarEquipo(cTransversal);
-                                this.equipos.add(cTransversal);
+                                this.datos.getActual().add(cTransversal);
                                 break;
                                 
                             //Extremo Humedo
@@ -233,7 +240,7 @@ public class Sistema
                                 
                                 Equipo exHumedo = this.creador.crearExHumedo();
                                 exHumedo = this.completarEquipo(exHumedo);
-                                this.equipos.add(exHumedo);
+                                this.datos.getActual().add(exHumedo);
                                 break;
                                 
                             //Extremo Seco
@@ -243,7 +250,7 @@ public class Sistema
                                 
                                 Equipo exSeco = this.creador.crearExSeco();
                                 exSeco = this.completarEquipo(exSeco);
-                                this.equipos.add(exSeco);
+                                this.datos.getActual().add(exSeco);
                                 break;
                         }
                     }
@@ -312,10 +319,10 @@ public class Sistema
                     
                 //Exportar datos a excel
                 case 4:
-                    this.hoja.setEquipos(this.equipos);
+                    this.libro.setEquipos(this.datos.getActual());
                     try 
                     {
-                        this.hoja.generaDocumento();
+                        this.libro.generaDocumento();
                         this.menu.printExito();
 
                     } 
@@ -323,6 +330,20 @@ public class Sistema
                     {
                         this.menu.printError();
                     }
+                    break;
+                    
+                case 5:
+                    try 
+                    {
+                        this.libro.setLibro(this.seeder.cargarBD());
+                        this.menu.printExito();
+
+                    } 
+                    catch (IOException e)
+                    {
+                        this.menu.printError();
+                    }
+                    break;
             }
         }
         return true;
@@ -331,8 +352,6 @@ public class Sistema
     
     private Equipo completarEquipo(Equipo equipo)
     {
-        
-        
         System.out.println("Proveedor: ");
         String pro = this.lector.ingresarTexto();
         //System.out.println("Posi: ");
@@ -367,168 +386,5 @@ public class Sistema
 
         return equipo;
     }
-
-
-    /************DEPRECADO********************/
-
-    public boolean inicio()
-    {
-        while (opcion != 0)
-        {
-            this.menu.mainMenu();
-            System.out.println("");
-            System.out.print("Elegir una opción: ");
-            System.out.println("");
-            this.opcion = this.lector.leerEntero();
-            switch(opcion)
-            {
-                case 0:
-                    this.menu.printExit();
-                    break;
-                case 1:
-                    //this.menu.printIngresarEquipo();
-                    lector.buffer();
-                    
-                    System.out.println("Nombre del equipo: ");
-                    String nombre = this.lector.ingresarTexto();
-                    System.out.println("codigo: ");
-                    int codigo = this.lector.leerEntero();
-                    System.out.println("Tipo: ");
-                    String tipo = this.lector.ingresarTexto();
-                    System.out.println("descripcion: ");
-                    String descripcion = this.lector.ingresarTexto();
-                    System.out.println("fecha de ingreso: ");
-                    Calendar fechai = Calendar.getInstance();
-                    System.out.println("fecha actual ingresada por defecto.");
-                    
-                    Equipo equipo = new Equipo(codigo, nombre, tipo, descripcion, fechai);
-                    this.equipos.add(equipo);
-                    break;
-                    
-                case 2:
-                    
-                    if (this.hayEquipos() == false)
-                    {
-                        System.out.println("No existen maquinas en el registro.");
-                        System.out.println("");
-                        break;
-                    }
-                    lector.buffer();
-                    
-                    //this.menu.printModificarEquipo();
-                    int subOpcion = -1;
-                    while(subOpcion != 0)
-                    {
-                        this.menu.printModificarEquipo();
-                        subOpcion = this.lector.leerEntero();
-                        switch(subOpcion)
-                        {
-                            case 0:
-                                System.out.println("Volviendo al menu principal");
-                                break;
-                                
-                            case 1:
-                                
-                                lector.buffer();
-                                
-                                System.out.println("Escriba el codigo del equipo a modificar.");
-                                int tmpCodName = this.lector.leerEntero();
-                                lector.buffer();
-                                Equipo modEqpName = this.buscarEquipo(tmpCodName);
-                                if (modEqpName != null)
-                                    {
-                                        System.out.println("Escriba el nuevo nombre a asignar.");
-                                        String nvoNombre = this.lector.ingresarTexto();
-                                        modEqpName.setNombre(nvoNombre);
-                                        System.out.println("nombre Modificado");
-                                        break;
-                                    }
-                                else
-                                {
-                                    System.out.println("Equipo no encontrado, revisar codigo");
-                                    break;
-                                }
-                                
-                            case 2:
-                                
-                                lector.buffer();
-                                
-                                System.out.println("Escriba el codigo del equipo a modificar.");
-                                int tmpCodCod = this.lector.leerEntero();
-                                lector.buffer();
-                                Equipo modEqpCod = this.buscarEquipo(tmpCodCod);
-                                if (modEqpCod != null)
-                                    {
-                                        System.out.println("Escriba el nuevo nombre a asignar.");
-                                        int nvoCod = this.lector.leerEntero();
-                                        modEqpCod.setCodigoSap(nvoCod);
-                                        break;
-                                    }
-                                else
-                                {
-                                    System.out.println("Equipo no encontrado, revisar codigo");
-                                    break;
-                                }
-                                
-                            case 3:
-                                
-                                lector.buffer();
-                                
-                                System.out.println("Escriba el codigo del equipo a modificar.");
-                                int tmpCodDes = this.lector.leerEntero();
-                                lector.buffer();
-                                Equipo modEqpDes = this.buscarEquipo(tmpCodDes);
-                                if (modEqpDes != null)
-                                    {
-                                        System.out.println("Escriba la nueva descripcion a asignar.");
-                                        String nvaDesc = this.lector.ingresarTexto();
-                                        modEqpDes.setDescripcion(nvaDesc);
-                                        break;
-                                    }
-                                else
-                                {
-                                    System.out.println("Equipo no encontrado, revisar codigo");
-                                    break;
-                                }
-                        }
-                    }
-                    
-                    break;
-                    
-                case 3:
-                    lector.buffer();
-                    System.out.println("Escriba el codigo del equipo a eliminar");
-                    int codE = this.lector.leerEntero();
-                    this.lector.buffer();
-                    if (this.borrarEquipo(codE) == true)
-                    {
-                        System.out.println("Eliminado con exito.");
-                    }
-                    else
-                    {
-                        System.out.println("Error en eliminar el equipo.");
-                    }
-                    break;
-                    
-                case 4:
-                    this.listarEquipos();
-                    break;
-                    
-                case 6:
-                    try 
-                    {
-                        this.hoja.setEquipos(this.equipos);
-                        this.hoja.generaDocumento();
-                    } 
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-            }
-        }
-        return true;
-    }
-    
-    
 }
           

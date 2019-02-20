@@ -142,13 +142,20 @@ public class Equipo
     
     public void print()
     {
-        System.out.println("**********************************************************");
+        System.out.println("*************************************************");
         //System.out.println("*** Codigo: "+this.codigo);
         System.out.println("*** Nombre: "+this.nombre);
         System.out.println("*** Tipo: "+this.tipo);
         //System.out.println("*** Posi: "+this.posi);
         System.out.println("*** Descripcion: "+this.descripcion);
-        System.out.println("*** FechaIngreso: "+this.formatoCalendario(this.fechaIngreso));
+        if(this.fechaIngreso != null)
+        {
+            System.out.println("*** FechaIngreso: "+this.formatoCalendario(this.fechaIngreso));
+        }
+        else
+        {
+            System.out.println("*** FechaIngreso: Error");
+        }
         System.out.println("*** Estado: " + this.estado);
         System.out.println("*** Dias Operativos: "+this.actualizarDiasOp());
         if(this.fechaSalida != null)
@@ -160,7 +167,7 @@ public class Equipo
             System.out.println("*** FechaSalida: Error");
         }
         System.out.println("*** Plan Operativo: "+this.planOperativo);
-        System.out.println("**********************************************************");
+        System.out.println("*************************************************");
 
     }
     
@@ -173,12 +180,19 @@ public class Equipo
     
     public int actualizarDiasOp()
     {
+        if(this.fechaIngreso != null)
+        {
         long t1 = this.fechaIngreso.getTimeInMillis();
         long t2 = Calendar.getInstance().getTimeInMillis();
         
         int dias = (int) ((t2-t1)/1000/60/60/24)+1;
         this.diasOp = dias;
         return dias;
+        }
+        else
+        {
+            return -1;
+        }
     }
     
     
