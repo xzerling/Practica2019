@@ -39,8 +39,18 @@ public final class SpreadSheet
     // documento con las hojas de calculo
     private final Workbook libro;
 
-    // la hoja de calculo
-    private final Sheet hojaTelas;
+    // las hojas de calculo
+    private final Sheet hojaActual;
+    private final Sheet hojaHistoricaPickUp;
+    private final Sheet hojaHistorica2daPrensa;
+    private final Sheet hojaHistorica3raSuperior;
+    private final Sheet hojaHistorica3raInferior;
+    private final Sheet hojaHistorica3TelaSup;
+    private final Sheet hojaHistorica3TelaInf;
+    private final Sheet hojaHistoricaManta;
+    private final Sheet hojaHistoricaTransversal;
+    private final Sheet hojaHistoricaExHumedo;
+    private final Sheet hojaHistoricaExSeco;
 
     // estilo de las celdas del encabezado (con el nombre de las columnas)
     private final CellStyle estiloTitulo;
@@ -63,13 +73,23 @@ public final class SpreadSheet
     Row filaTelaInf;
     Row filaManta;
     Row filacTransversal;
-    Row filaTDAB2;
-    Row filaTDAB3;
+    Row filaExHumedo;
+    Row filaExSeco;
 
     public SpreadSheet()
     {
         this.libro = new HSSFWorkbook();
-        this.hojaTelas = this.libro.createSheet("Equipos actuales");
+        this.hojaActual = this.libro.createSheet("Equipos actuales");
+        this.hojaHistoricaPickUp = this.libro.createSheet("Historial de PickUp");
+        this.hojaHistorica2daPrensa = this.libro.createSheet("Historial 2da Prensa");
+        this.hojaHistorica3raSuperior = this.libro.createSheet("Historial 3ra Superior");
+        this.hojaHistorica3raInferior = this.libro.createSheet("Historial 3ra Inferior");
+        this.hojaHistorica3TelaSup = this.libro.createSheet("Historial Tela Superior");
+        this.hojaHistorica3TelaInf = this.libro.createSheet("Historial Tela Inferior");
+        this.hojaHistoricaManta = this.libro.createSheet("Historial Manta");
+        this.hojaHistoricaTransversal = this.libro.createSheet("Historial C. Transversal");
+        this.hojaHistoricaExHumedo = this.libro.createSheet("Historial Extremo Humedo");
+        this.hojaHistoricaExSeco = this.libro.createSheet("Historial Extremo Seco");
         this.estiloTitulo = getEstiloTitulo();
         this.estiloCelda = getEstiloCelda();
         this.estiloCelda2 = getEstiloCelda2();
@@ -96,11 +116,12 @@ public final class SpreadSheet
         int numeroCelda = 0;
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Posición paños - telas");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Proveedor");
-        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Posi");
+        //creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Posi");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Instalado");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Estado      ");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Días de operacion");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Plan Operativo");
         
         
 
@@ -129,7 +150,7 @@ public final class SpreadSheet
         
     private Row getNuevaFila()
     {
-        return hojaTelas.createRow(hojaTelas.getPhysicalNumberOfRows());
+        return hojaActual.createRow(hojaActual.getPhysicalNumberOfRows());
     }
 
     private void creaCeldaEncabezado(Row filaEncabezado, int numeroCelda, String valor)
@@ -191,10 +212,10 @@ public final class SpreadSheet
         
     private void ajustaColumnas()
     {
-        final short numeroColumnas = hojaTelas.getRow(0).getLastCellNum();
+        final short numeroColumnas = hojaActual.getRow(0).getLastCellNum();
         for (int i = 0; i < numeroColumnas; i++) 
         {
-                hojaTelas.autoSizeColumn(i);
+                hojaActual.autoSizeColumn(i);
         }
     }
         
@@ -209,8 +230,8 @@ public final class SpreadSheet
         this.filaTelaInf = this.getNuevaFila();
         this.filaManta = this.getNuevaFila();
         this.filacTransversal = this.getNuevaFila();
-        this.filaTDAB2 = this.getNuevaFila();
-        this.filaTDAB3 = this.getNuevaFila();
+        this.filaExHumedo = this.getNuevaFila();
+        this.filaExSeco = this.getNuevaFila();
         
         Cell Pickup = filaPickUp.createCell(0);
         Cell segundaPrensa = fila2daPrensa.createCell(0);
@@ -220,8 +241,8 @@ public final class SpreadSheet
         Cell telaInf = filaTelaInf.createCell(0);
         Cell manta = filaManta.createCell(0);
         Cell cTransversal = filacTransversal.createCell(0);
-        Cell tdab2 = filaTDAB2.createCell(0);
-        Cell tdab3 = filaTDAB3.createCell(0);
+        Cell Humedo = filaExHumedo.createCell(0);
+        Cell Seco = filaExSeco.createCell(0);
         
         Pickup.setCellStyle(estiloCelda);
         segundaPrensa.setCellStyle(estiloCelda);
@@ -231,8 +252,8 @@ public final class SpreadSheet
         telaInf.setCellStyle(estiloCelda);
         manta.setCellStyle(estiloCelda);
         cTransversal.setCellStyle(estiloCelda);
-        tdab2.setCellStyle(estiloCelda);
-        tdab3.setCellStyle(estiloCelda);
+        Humedo.setCellStyle(estiloCelda);
+        Seco.setCellStyle(estiloCelda);
         
         Pickup.setCellValue("Pick up");
         segundaPrensa.setCellValue("2da Prensa");
@@ -242,8 +263,8 @@ public final class SpreadSheet
         telaInf.setCellValue("Tela Inferior");
         manta.setCellValue("Manta");
         cTransversal.setCellValue("C. Transversal");
-        tdab2.setCellValue("Nivel TADB 2");
-        tdab3.setCellValue("Nivel TADB 3");
+        Humedo.setCellValue("Tela Extremo Humedo");
+        Seco.setCellValue("Tela Extremo Seco");
         
     }
     
@@ -259,20 +280,22 @@ public final class SpreadSheet
         int dOps;
         String cambio = "";
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
         
         for (int i = 0; i < cantidad; i++)
         {
             equipos.get(i).actualizarDiasOp();
             codInt = equipos.get(i).getCodInterno();
             prov = equipos.get(i).getProveedor();
-            posi = equipos.get(i).getPosi();
+            //posi = equipos.get(i).getPosi();
             instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
             estado = equipos.get(i).getEstado();
             dOps = equipos.get(i).getDiasOp();
             if(equipos.get(i).getFechaSalida() != null){
             cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
             equipos.get(i).print();
-            this.creaFila(codInt, prov, posi, instalado, estado, dOps, cambio);
+            pop = equipos.get(i).getPlanOperativo();
+            this.creaFila(codInt, prov, posi, instalado, estado, dOps, cambio, pop);
         }
         return true;
     }
@@ -284,241 +307,340 @@ public final class SpreadSheet
     }
     
     private void creaFila(int i, String pro, String pos, String inst,
-            String est,int dO, String cam)
+            String est,int dO, String cam, int pop)
     {
         if(i == 0)
         {
-            this.crearFilaPickup(pro, pos, inst, est, dO, cam);
+            this.crearFilaPickup(pro, inst, est, dO, cam, pop);
         }
         if(i == 1)
         {
-            this.crearFila2daPrensa(pro, pos, inst, est, dO, cam);
+            this.crearFila2daPrensa(pro, inst, est, dO, cam, pop);
         }
         if(i == 2)
         {
-            this.crearFila3raSup(pro, pos, inst, est, dO, cam);
+            this.crearFila3raSup(pro, inst, est, dO, cam, pop);
         }
         if(i == 3)
         {
-            this.crearFila3raInf(pro, pos, inst, est, dO, cam);
+            this.crearFila3raInf(pro, inst, est, dO, cam, pop);
         }
         if(i == 4)
         {
-            this.crearFilaTelaSup(pro, pos, inst, est, dO, cam);
+            this.crearFilaTelaSup(pro, inst, est, dO, cam, pop);
         }
         if(i == 5)
         {
-            this.crearFilaTelaInf(pro, pos, inst, est, dO, cam);
+            this.crearFilaTelaInf(pro, inst, est, dO, cam, pop);
         }
         if(i == 6)
         {
-            this.crearFilaManta(pro, pos, inst, est, dO, cam);
+            this.crearFilaManta(pro, inst, est, dO, cam, pop);
         }
         if(i == 7)
         {
-            this.crearFilaCT(pro, pos, inst, est, dO, cam);
+            this.crearFilaCT(pro, inst, est, dO, cam, pop);
         }
+        if(i == 8)
+        {
+            this.crearFilaExHum(pro, inst, est, dO, cam, pop);
+        }
+        if(i == 9)
+        {
+            this.crearFilaExSec(pro, inst, est, dO, cam, pop);
+        }
+        
 
     }
 
-    private void crearFilaPickup(String pro, String pos, String inst,
-            String est,int dO, String cam) 
+    private void crearFilaPickup(String pro, String inst,
+            String est,int dO, String cam, int pop) 
     {
-        Cell prov = this.filaPickUp.createCell(1);
-        Cell posi = this.filaPickUp.createCell(2);
-        Cell instalado = this.filaPickUp.createCell(3);
-        Cell estado = this.filaPickUp.createCell(4);
-        Cell dOps = this.filaPickUp.createCell(5);
-        Cell cambio = this.filaPickUp.createCell(6);
+        int i = 1;
+        Cell prov = this.filaPickUp.createCell(i);
+        ////Cell posi = this.filaPickUp.createCell(i+1);
+        Cell instalado = this.filaPickUp.createCell(i+1);
+        Cell estado = this.filaPickUp.createCell(i+2);
+        Cell dOps = this.filaPickUp.createCell(i+3);
+        Cell cambio = this.filaPickUp.createCell(i+4);
+        Cell planOp = this.filaPickUp.createCell(i+5);
         
         prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        posi.setCellValue(pos);
+        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
     }
 
-    private void crearFila2daPrensa(String pro, String pos, String inst,
-            String est,int dO, String cam)  
+    private void crearFila2daPrensa(String pro, String inst,
+            String est,int dO, String cam, int pop)  
     {
-        Cell prov = this.fila2daPrensa.createCell(1);
-        Cell posi = this.fila2daPrensa.createCell(2);
-        Cell instalado = this.fila2daPrensa.createCell(3);
-        Cell estado = this.fila2daPrensa.createCell(4);
-        Cell dOps = this.fila2daPrensa.createCell(5);
-        Cell cambio = this.fila2daPrensa.createCell(6);
+        int i = 1;
+        Cell prov = this.fila2daPrensa.createCell(i);
+        //Cell posi = this.fila2daPrensa.createCell(2);
+        Cell instalado = this.fila2daPrensa.createCell(i+1);
+        Cell estado = this.fila2daPrensa.createCell(i+2);
+        Cell dOps = this.fila2daPrensa.createCell(i+3);
+        Cell cambio = this.fila2daPrensa.createCell(i+4);
+        Cell planOp = this.fila2daPrensa.createCell(i+5);
         
         prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
-        cambio.setCellStyle(estiloCelda2);       
+        cambio.setCellStyle(estiloCelda2);    
+        planOp.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        posi.setCellValue(pos);
+        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
     }
 
-    private void crearFila3raSup(String pro, String pos, String inst,
-            String est,int dO, String cam) 
+    private void crearFila3raSup(String pro, String inst,
+            String est,int dO, String cam, int pop) 
     {
-        Cell prov = this.fila3raSuperior.createCell(1);
-        Cell posi = this.fila3raSuperior.createCell(2);
-        Cell instalado = this.fila3raSuperior.createCell(3);
-        Cell estado = this.fila3raSuperior.createCell(4);
-        Cell dOps = this.fila3raSuperior.createCell(5);
-        Cell cambio = this.fila3raSuperior.createCell(6);
+        int i = 1;
+        Cell prov = this.fila3raSuperior.createCell(i);
+        //Cell posi = this.fila3raSuperior.createCell(2);
+        Cell instalado = this.fila3raSuperior.createCell(i+1);
+        Cell estado = this.fila3raSuperior.createCell(i+2);
+        Cell dOps = this.fila3raSuperior.createCell(i+3);
+        Cell cambio = this.fila3raSuperior.createCell(i+4);
+        Cell planOp = this.fila3raSuperior.createCell(i+5);
         
         prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
-        instalado.setCellStyle(estiloCelda2);
-        estado.setCellStyle(estiloCelda2);
-        dOps.setCellStyle(estiloCelda2);
-        cambio.setCellStyle(estiloCelda2);
-        
-        prov.setCellValue(pro);
-        posi.setCellValue(pos);
-        instalado.setCellValue(inst);
-        estado.setCellValue(est);
-        dOps.setCellValue(dO);
-        cambio.setCellValue(cam);
-    }
-
-    private void crearFila3raInf(String pro, String pos, String inst,
-            String est,int dO, String cam) 
-    {
-        Cell prov = this.fila3raInferior.createCell(1);
-        Cell posi = this.fila3raInferior.createCell(2);
-        Cell instalado = this.fila3raInferior.createCell(3);
-        Cell estado = this.fila3raInferior.createCell(4);
-        Cell dOps = this.fila3raInferior.createCell(5);
-        Cell cambio = this.fila3raInferior.createCell(6);
-        
-        prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        posi.setCellValue(pos);
+        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
     }
 
-    private void crearFilaTelaSup(String pro, String pos, String inst,
-            String est,int dO, String cam) 
+    private void crearFila3raInf(String pro, String inst,
+            String est,int dO, String cam, int pop) 
     {
-        Cell prov = this.filaTelaSup.createCell(1);
-        Cell posi = this.filaTelaSup.createCell(2);
-        Cell instalado = this.filaTelaSup.createCell(3);
-        Cell estado = this.filaTelaSup.createCell(4);
-        Cell dOps = this.filaTelaSup.createCell(5);
-        Cell cambio = this.filaTelaSup.createCell(6);
+        int i = 1;
+        Cell prov = this.fila3raInferior.createCell(i);
+        //Cell posi = this.fila3raInferior.createCell(2);
+        Cell instalado = this.fila3raInferior.createCell(i+1);
+        Cell estado = this.fila3raInferior.createCell(1+2);
+        Cell dOps = this.fila3raInferior.createCell(i+3);
+        Cell cambio = this.fila3raInferior.createCell(i+4);
+        Cell planOp = this.fila3raInferior.createCell(i+5);
         
         prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        posi.setCellValue(pos);
+        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
     }
 
-    private void crearFilaTelaInf(String pro, String pos, String inst,
-            String est,int dO, String cam) 
+    private void crearFilaTelaSup(String pro, String inst,
+            String est,int dO, String cam, int pop) 
     {
-        Cell prov = this.filaTelaInf.createCell(1);
-        Cell posi = this.filaTelaInf.createCell(2);
-        Cell instalado = this.filaTelaInf.createCell(3);
-        Cell estado = this.filaTelaInf.createCell(4);
-        Cell dOps = this.filaTelaInf.createCell(5);
-        Cell cambio = this.filaTelaInf.createCell(6);
+        int i = 1;
+        Cell prov = this.filaTelaSup.createCell(i);
+        //Cell posi = this.filaTelaSup.createCell(2);
+        Cell instalado = this.filaTelaSup.createCell(i+1);
+        Cell estado = this.filaTelaSup.createCell(i+2);
+        Cell dOps = this.filaTelaSup.createCell(i+3);
+        Cell cambio = this.filaTelaSup.createCell(i+4);
+        Cell planOp = this.filaTelaSup.createCell(i+5);
         
         prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        posi.setCellValue(pos);
+        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
     }
 
-    private void crearFilaManta(String pro, String pos, String inst,
-            String est,int dO, String cam) 
+    private void crearFilaTelaInf(String pro, String inst,
+            String est,int dO, String cam, int pop) 
     {
-        Cell prov = this.filaManta.createCell(1);
-        Cell posi = this.filaManta.createCell(2);
-        Cell instalado = this.filaManta.createCell(3);
-        Cell estado = this.filaManta.createCell(4);
-        Cell dOps = this.filaManta.createCell(5);
-        Cell cambio = this.filaManta.createCell(6);
+        int i = 1;
+        Cell prov = this.filaTelaInf.createCell(i);
+        //Cell posi = this.filaTelaInf.createCell(i+1);
+        Cell instalado = this.filaTelaInf.createCell(i+1);
+        Cell estado = this.filaTelaInf.createCell(i+2);
+        Cell dOps = this.filaTelaInf.createCell(i+3);
+        Cell cambio = this.filaTelaInf.createCell(i+4);
+        Cell planOp = this.filaTelaInf.createCell(i+5);
         
         prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        posi.setCellValue(pos);
+        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
     }
 
-    private void crearFilaCT(String pro, String pos, String inst,
-            String est,int dO, String cam) 
+    private void crearFilaManta(String pro, String inst,
+            String est,int dO, String cam, int pop) 
     {
+        int i = 1;
+        Cell prov = this.filaManta.createCell(i);
+        //Cell posi = this.filaManta.createCell(2);
+        Cell instalado = this.filaManta.createCell(i+1);
+        Cell estado = this.filaManta.createCell(i+2);
+        Cell dOps = this.filaManta.createCell(i+3);
+        Cell cambio = this.filaManta.createCell(i+4);
+        Cell planOp = this.filaManta.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+
+    private void crearFilaCT(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
         Cell prov = this.filacTransversal.createCell(1);
-        Cell posi = this.filacTransversal.createCell(2);
-        Cell instalado = this.filacTransversal.createCell(3);
-        Cell estado = this.filacTransversal.createCell(4);
-        Cell dOps = this.filacTransversal.createCell(5);
-        Cell cambio = this.filacTransversal.createCell(6);
+        //Cell posi = this.filacTransversal.createCell(2);
+        Cell instalado = this.filacTransversal.createCell(i+1);
+        Cell estado = this.filacTransversal.createCell(i+2);
+        Cell dOps = this.filacTransversal.createCell(i+3);
+        Cell cambio = this.filacTransversal.createCell(i+4);
+        Cell planOp = this.filacTransversal.createCell(i+5);
         
         prov.setCellStyle(estiloCelda2);
-        posi.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        posi.setCellValue(pos);
+        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+    
+        private void crearFilaExHum(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaExHumedo.createCell(1);
+        //Cell posi = this.filaExHumedo.createCell(2);
+        Cell instalado = this.filaExHumedo.createCell(i+1);
+        Cell estado = this.filaExHumedo.createCell(i+2);
+        Cell dOps = this.filaExHumedo.createCell(i+3);
+        Cell cambio = this.filaExHumedo.createCell(i+4);
+        Cell planOp = this.filaExHumedo.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+        
+    private void crearFilaExSec(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaExSeco.createCell(1);
+        //Cell posi = this.filaExSeco.createCell(2);
+        Cell instalado = this.filaExSeco.createCell(i+1);
+        Cell estado = this.filaExSeco.createCell(i+2);
+        Cell dOps = this.filaExSeco.createCell(i+3);
+        Cell cambio = this.filaExSeco.createCell(i+4);
+        Cell planOp = this.filaExSeco.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
     }
 
 

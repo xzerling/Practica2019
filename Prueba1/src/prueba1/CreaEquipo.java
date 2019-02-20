@@ -106,23 +106,23 @@ public class CreaEquipo
         
         return equipo;
     }
-    public Equipo crearNivelTADB2()
+    public Equipo crearExHumedo()
     {
         Equipo equipo = new Equipo();
         equipo.setCodInterno(8);
         equipo.setCodigoSap(0);
-        equipo.setNombre("Nivel TADB2");
+        equipo.setNombre("Tela Extremo Humedo");
         equipo.setDescripcion("NoDescription");
         equipo.setTag("noTag");
         
         return equipo;
     }
-    public Equipo crearNivelTADB3()
+    public Equipo crearExSeco()
     {
         Equipo equipo = new Equipo();
         equipo.setCodInterno(9);
         equipo.setCodigoSap(0);
-        equipo.setNombre("Nivel TADB3");
+        equipo.setNombre("Nivel Extremo Seco");
         equipo.setDescripcion("NoDescription");
         equipo.setTag("noTag");
         

@@ -73,8 +73,8 @@ public class Menu
         System.out.println("6. Tela Inferior");
         System.out.println("7. Manta");
         System.out.println("8. C.Transversal");
-        System.out.println("9. Nivel TADB2");
-        System.out.println("10. Nivel TADB3");
+        System.out.println("9. Extremo Seco");
+        System.out.println("10. Extremo Humedo");
         System.out.println("0. Volver menu anterior");
     }
     

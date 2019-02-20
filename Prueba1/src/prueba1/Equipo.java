@@ -20,12 +20,13 @@ public class Equipo
     private int codigoSap;
     private int diasOp;
     private int codInterno;
+    private int planOperativo;
     private String tag;
     private String nombre;
     private String tipo;
     private String proveedor;
     private String descripcion;
-    private String posi;
+    //private String posi;
     private String estado;
     private Calendar fechaIngreso;
     private Calendar fechaSalida;
@@ -41,6 +42,14 @@ public class Equipo
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.fechaIngreso = fechaIngreso;
+    }
+
+    public int getPlanOperativo() {
+        return planOperativo;
+    }
+
+    public void setPlanOperativo(int planOperativo) {
+        this.planOperativo = planOperativo;
     }
 
     public int getCodigoSap() {
@@ -81,14 +90,6 @@ public class Equipo
 
     public void setTag(String tag) {
         this.tag = tag;
-    }
-
-    public String getPosi() {
-        return posi;
-    }
-
-    public void setPosi(String posi) {
-        this.posi = posi;
     }
 
     public String getEstado() {
@@ -145,7 +146,7 @@ public class Equipo
         //System.out.println("*** Codigo: "+this.codigo);
         System.out.println("*** Nombre: "+this.nombre);
         System.out.println("*** Tipo: "+this.tipo);
-        System.out.println("*** Posi: "+this.posi);
+        //System.out.println("*** Posi: "+this.posi);
         System.out.println("*** Descripcion: "+this.descripcion);
         System.out.println("*** FechaIngreso: "+this.formatoCalendario(this.fechaIngreso));
         System.out.println("*** Estado: " + this.estado);
@@ -158,6 +159,7 @@ public class Equipo
         {
             System.out.println("*** FechaSalida: Error");
         }
+        System.out.println("*** Plan Operativo: "+this.planOperativo);
         System.out.println("**********************************************************");
 
     }
@@ -193,5 +195,15 @@ public class Equipo
         System.out.println("*** Proximo cambio: " + this.fechaSalida);
         System.out.println("**********************************************************");
     }
+    
+    /*
+    public String getPosi() {
+        return posi;
+    }
+
+    public void setPosi(String posi) {
+        this.posi = posi;
+    }*/
+    
     
 }

@@ -189,7 +189,6 @@ public class Sistema
                             //Tela Superior
                             case 5:
                                 
-                                                                
                                 lector.buffer();
                                 
                                 Equipo telaSup = this.creador.crearTelaSuperior();
@@ -199,7 +198,6 @@ public class Sistema
                                 
                             //Tela inferior
                             case 6:
-                                
                                                                                                 
                                 lector.buffer();
                                 
@@ -210,7 +208,6 @@ public class Sistema
                                 
                             //Manta
                             case 7:
-                                
                                                                                                 
                                 lector.buffer();
                                 
@@ -222,7 +219,6 @@ public class Sistema
                             //C. Transversal
                             case 8:
                                 
-                                                                                                
                                 lector.buffer();
                                 
                                 Equipo cTransversal = this.creador.crearCTrnasversal();
@@ -230,26 +226,24 @@ public class Sistema
                                 this.equipos.add(cTransversal);
                                 break;
                                 
-                            //Nivel TADB2
+                            //Extremo Humedo
                             case 9:
-                                
                                                                                                 
                                 lector.buffer();
                                 
-                                Equipo nTADB2 = this.creador.crearNivelTADB2();
-                                nTADB2 = this.completarEquipo(nTADB2);
-                                this.equipos.add(nTADB2);
+                                Equipo exHumedo = this.creador.crearExHumedo();
+                                exHumedo = this.completarEquipo(exHumedo);
+                                this.equipos.add(exHumedo);
                                 break;
                                 
-                            //Nivel TADB3
+                            //Extremo Seco
                             case 10:
-                                
                                                                                                 
                                 lector.buffer();
                                 
-                                Equipo nTADB3 = this.creador.crearNivelTADB3();
-                                nTADB3 = this.completarEquipo(nTADB3);
-                                this.equipos.add(nTADB3);
+                                Equipo exSeco = this.creador.crearExSeco();
+                                exSeco = this.completarEquipo(exSeco);
+                                this.equipos.add(exSeco);
                                 break;
                         }
                     }
@@ -341,18 +335,20 @@ public class Sistema
         
         System.out.println("Proveedor: ");
         String pro = this.lector.ingresarTexto();
-        System.out.println("Posi: ");
-        String pos = this.lector.ingresarTexto();
+        //System.out.println("Posi: ");
+        //String pos = this.lector.ingresarTexto();
         System.out.println("Fecha ingresada automaticamete al dia de hoy.");
         System.out.println("Estado: ");
         String est = this.lector.ingresarTexto();
         System.out.println("Proximo Cambio: ");
         System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
         String fecha = this.lector.ingresarTexto();
+        System.out.println("Plan Operativo (dias): ");
+        int pop = this.lector.leerEntero();
         
         
         equipo.setProveedor(pro);
-        equipo.setPosi(pos);
+        //equipo.setPosi(pos);
         equipo.setFechaIngreso(Calendar.getInstance());
         equipo.setEstado(est);
         try
@@ -367,8 +363,8 @@ public class Sistema
             this.menu.printErrorFecha();
             equipo.setFechaSalida(null);
         }
-        
-        
+        equipo.setPlanOperativo(pop);
+
         return equipo;
     }
 
