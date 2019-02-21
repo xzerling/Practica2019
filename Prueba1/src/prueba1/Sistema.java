@@ -28,6 +28,7 @@ public class Sistema
     //private ArrayList equipos;
     private Datos datos;
     private Seeder seeder;
+    private Flag flags;
     private int opcion;
     private SpreadSheet libro;
     private SimpleDateFormat sdf;
@@ -39,6 +40,7 @@ public class Sistema
        //this.equipos = new ArrayList();
         this.datos = new Datos();
         this.seeder = new Seeder();
+        this.flags = new Flag();
         this.creador = new CreaEquipo();
         this.opcion = -1;
         this.libro = new SpreadSheet();
@@ -116,12 +118,63 @@ public class Sistema
         }
         return false;
     }
+    
+    private void verificarExsistencia(ArrayList<Equipo> actual)
+    {
+        for (int i = 0; i < actual.size(); i++) 
+        {
+            if(actual.get(i).getCodInterno() == 0)
+            {
+                this.flags.setfPickUp(true);
+            }
+            if(actual.get(i).getCodInterno() == 1)
+            {
+                this.flags.setF2daPrensa(true);
+            }
+            if(actual.get(i).getCodInterno() == 2)
+            {
+                this.flags.setF3raSuperior(true);
+            }
+            if(actual.get(i).getCodInterno() == 3)
+            {
+                this.flags.setF3raInferior(true);
+            }
+            if(actual.get(i).getCodInterno() == 4)
+            {
+                this.flags.setF3TelaSup(true);
+            }
+            if(actual.get(i).getCodInterno() == 5)
+            {
+                this.flags.setF3TelaInf(true);
+            }
+            if(actual.get(i).getCodInterno() == 6)
+            {
+                this.flags.setfManta(true);
+            }
+            if(actual.get(i).getCodInterno() == 7)
+            {
+                this.flags.setfTransversal(true);
+            }
+            if(actual.get(i).getCodInterno() == 8)
+            {
+                this.flags.setfExHumedo(true);
+            }
+            if(actual.get(i).getCodInterno() == 9)
+            {
+                this.flags.setfExSeco(true);
+            }
+        }
+    }
 
     
     public boolean newInicio() throws ParseException, IOException
     {
         this.menu.ppino();
         this.datos.setActual(this.seeder.cargarArray());
+        //this.datos.sethPickUp(this.seeder.cargarhPickUp);
+        this.verificarExsistencia(this.datos.getActual());
+        
+        
         while (opcion != 0)
         {
             this.menu.menuPrincipal();
@@ -159,6 +212,7 @@ public class Sistema
                                 
                                 Equipo pickUp = this.creador.crearPickUp();
                                 pickUp = this.completarEquipo(pickUp);
+                                this.existeAntiguo(this.datos.getActual());
                                 this.datos.getActual().add(pickUp);
                                 break;
                                 
@@ -319,7 +373,7 @@ public class Sistema
                     
                 //Exportar datos a excel
                 case 4:
-                    this.libro.setEquipos(this.datos.getActual());
+                    this.volcarDatos_A_Spreadsheet();
                     try 
                     {
                         this.libro.generaDocumento();
@@ -356,26 +410,40 @@ public class Sistema
         String pro = this.lector.ingresarTexto();
         //System.out.println("Posi: ");
         //String pos = this.lector.ingresarTexto();
-        System.out.println("Fecha ingresada automaticamete al dia de hoy.");
+        System.out.println("Fecha de ingreso: ");
+        System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
+        String fechaI = this.lector.ingresarTexto();
         System.out.println("Estado: ");
         String est = this.lector.ingresarTexto();
         System.out.println("Proximo Cambio: ");
         System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-        String fecha = this.lector.ingresarTexto();
+        String fechaS = this.lector.ingresarTexto();
         System.out.println("Plan Operativo (dias): ");
         int pop = this.lector.leerEntero();
         
         
         equipo.setProveedor(pro);
         //equipo.setPosi(pos);
-        equipo.setFechaIngreso(Calendar.getInstance());
+        //equipo.setFechaIngreso(Calendar.getInstance());
         equipo.setEstado(est);
         try
         {
-            Date date = this.sdf.parse(fecha);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            equipo.setFechaSalida(calendar);
+            Date dateI = this.sdf.parse(fechaI);
+            Calendar calendarI = Calendar.getInstance();
+            calendarI.setTime(dateI);
+            equipo.setFechaIngreso(calendarI);
+        }
+        catch(ParseException e)
+        {
+            this.menu.printErrorFecha();
+            equipo.setFechaSalida(null);
+        }
+        try
+        {
+            Date dateS = this.sdf.parse(fechaS);
+            Calendar calendarS = Calendar.getInstance();
+            calendarS.setTime(dateS);
+            equipo.setFechaSalida(calendarS);
         }
         catch(ParseException e)
         {
@@ -385,6 +453,111 @@ public class Sistema
         equipo.setPlanOperativo(pop);
 
         return equipo;
+    }
+    
+    private void volcarDatos_A_Spreadsheet()
+    {
+        this.libro.setEquipos(this.datos.getActual());
+        this.libro.setArrayPickUp(this.datos.gethPickUp());
+        System.out.println("tamaño: "+datos.gethPickUp().size());
+        this.libro.setArray2daPrensa(this.datos.getH2daPrensa());
+        this.libro.setArray3raSuperior(this.datos.getH3raSuperior());
+        this.libro.setArray3raInferior(this.datos.getH3raInferior());
+        this.libro.setArray3TelaSup(this.datos.getH3TelaSup());
+        this.libro.setArray3TelaInf(this.datos.getH3TelaInf());
+        this.libro.setArrayManta(this.datos.gethManta());
+        this.libro.setArrayTransversal(this.datos.gethTransversal());
+        this.libro.setArrayExHumedo(this.datos.gethExHumedo());
+        this.libro.setArrayExSeco(this.datos.gethExSeco());
+    }
+    
+    private void existeAntiguo(ArrayList<Equipo> actual)
+    {
+        for (int i = 0; i < actual.size(); i++) 
+        {
+            System.out.println("aaa");
+            if(actual.get(i).getCodInterno() == 0)
+            {
+                if(this.flags.isfPickUpTrue() == true)
+                {
+                    this.datos.gethPickUp().add(this.datos.getActual().get(i));
+                    System.out.println("agregado el pickup actual.");
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 1)
+            {
+                if(this.flags.isF2daPrensaTrue()== true)
+                {
+                    this.datos.getH2daPrensa().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 2)
+            {
+                if(this.flags.isF3raSuperiorTrue()== true)
+                {
+                    this.datos.getH3raSuperior().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 3)
+            {
+                if(this.flags.isF3raInferiorTrue()== true)
+                {
+                    this.datos.getH3raInferior().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 4)
+            {
+                if(this.flags.isF3TelaSupTrue()== true)
+                {
+                    this.datos.getH3TelaSup().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 5)
+            {
+                if(this.flags.isF3TelaInfTrue()== true)
+                {
+                    this.datos.getH3TelaInf().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 6)
+            {
+                if(this.flags.isfMantaTrue()== true)
+                {
+                    this.datos.gethManta().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 7)
+            {
+                if(this.flags.isfTransversalTrue()== true)
+                {
+                    this.datos.gethTransversal().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 8)
+            {
+                if(this.flags.isfExHumedoTrue()== true)
+                {
+                    this.datos.gethExHumedo().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+            else if(actual.get(i).getCodInterno() == 9)
+            {
+                if(this.flags.isfExSeco()== true)
+                {
+                    this.datos.gethExSeco().add(this.datos.getActual().get(i));
+                    this.datos.getActual().remove(i);
+                }
+            }
+        }
     }
 }
           
