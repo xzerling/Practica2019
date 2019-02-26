@@ -22,8 +22,6 @@ public class CreaEquipo
         pickUp.setCodInterno(0);
         pickUp.setCodigoSap(334560);
         pickUp.setNombre("Pick Up");
-        pickUp.setDescripcion("Paño Pick up");
-        pickUp.setTag("noTag");
         
         return pickUp;
     }
@@ -34,8 +32,6 @@ public class CreaEquipo
         equipo.setCodInterno(1);
         equipo.setCodigoSap(334561);
         equipo.setNombre("2da Prensa");
-        equipo.setDescripcion("Paño segunda prensa");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -46,8 +42,6 @@ public class CreaEquipo
         equipo.setCodInterno(2);
         equipo.setCodigoSap(0);
         equipo.setNombre("3ra Superior");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -57,8 +51,6 @@ public class CreaEquipo
         equipo.setCodigoSap(0);
         equipo.setCodInterno(3);
         equipo.setNombre("3ra Inferior");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -68,8 +60,6 @@ public class CreaEquipo
         equipo.setCodInterno(4);
         equipo.setCodigoSap(0);
         equipo.setNombre("Tela Superior");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -79,8 +69,6 @@ public class CreaEquipo
         equipo.setCodInterno(5);
         equipo.setCodigoSap(0);
         equipo.setNombre("Tela Inferior");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -90,8 +78,6 @@ public class CreaEquipo
         equipo.setCodInterno(6);
         equipo.setCodigoSap(0);
         equipo.setNombre("Manta");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -101,8 +87,6 @@ public class CreaEquipo
         equipo.setCodInterno(7);
         equipo.setCodigoSap(0);
         equipo.setNombre("C. Transversal");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -112,8 +96,6 @@ public class CreaEquipo
         equipo.setCodInterno(8);
         equipo.setCodigoSap(0);
         equipo.setNombre("Tela Extremo Humedo");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
         
         return equipo;
     }
@@ -123,8 +105,60 @@ public class CreaEquipo
         equipo.setCodInterno(9);
         equipo.setCodigoSap(0);
         equipo.setNombre("Nivel Extremo Seco");
-        equipo.setDescripcion("NoDescription");
-        equipo.setTag("noTag");
+        
+        return equipo;
+    }
+    public Equipo crearCintaEn()
+    {
+        Equipo equipo = new Equipo();
+        equipo.setCodInterno(10);
+        equipo.setCodigoSap(0);
+        equipo.setNombre("Cinta Enhebrado");
+        
+        return equipo;
+    }
+    public Equipo crearCHP1()
+    {
+        Equipo equipo = new Equipo();
+        equipo.setCodInterno(11);
+        equipo.setCodigoSap(0);
+        equipo.setNombre("Canastillo Hernero Primario 1");
+        
+        return equipo;
+    }
+    public Equipo crearCHP2()
+    {
+        Equipo equipo = new Equipo();
+        equipo.setCodInterno(12);
+        equipo.setCodigoSap(0);
+        equipo.setNombre("Canastillo Hernero Primario 2");
+        
+        return equipo;
+    }
+    public Equipo crearCHP3()
+    {
+        Equipo equipo = new Equipo();
+        equipo.setCodInterno(13);
+        equipo.setCodigoSap(0);
+        equipo.setNombre("Canastillo Hernero Primario 3");
+        
+        return equipo;
+    }
+    public Equipo crearCHS()
+    {
+        Equipo equipo = new Equipo();
+        equipo.setCodInterno(14);
+        equipo.setCodigoSap(0);
+        equipo.setNombre("Canastillo Hernero Secundario");
+        
+        return equipo;
+    }
+    public Equipo crearCHT()
+    {
+        Equipo equipo = new Equipo();
+        equipo.setCodInterno(15);
+        equipo.setCodigoSap(0);
+        equipo.setNombre("Canastillo Hernero Terciario");
         
         return equipo;
     }

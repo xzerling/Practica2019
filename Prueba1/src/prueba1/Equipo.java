@@ -21,13 +21,11 @@ public class Equipo
     private int diasOp;
     private int codInterno;
     private int planOperativo;
-    private String tag;
+    private String idCajaPaño;
     private String nombre;
     private String tipo;
     private String proveedor;
-    private String descripcion;
-    //private String posi;
-    private String estado;
+    private String causaCambio;
     private Calendar fechaIngreso;
     private Calendar fechaSalida;
     
@@ -36,11 +34,11 @@ public class Equipo
         this.fechaIngreso = Calendar.getInstance();
     }
 
-    public Equipo(int codigo, String nombre, String tipo, String descripcion, Calendar fechaIngreso) {
+    public Equipo(int codigo, String nombre, String tipo, String causaCambio, Calendar fechaIngreso) {
         this.codigoSap = codigo;
         this.nombre = nombre;
         this.tipo = tipo;
-        this.descripcion = descripcion;
+        this.causaCambio = causaCambio;
         this.fechaIngreso = fechaIngreso;
     }
 
@@ -84,20 +82,12 @@ public class Equipo
         this.diasOp = diasOp;
     }
 
-    public String getTag() {
-        return tag;
+    public String getIdCajaPaño() {
+        return idCajaPaño;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setIdCajaPaño(String idCajaPaño) {
+        this.idCajaPaño = idCajaPaño;
     }
 
     public String getNombre() {
@@ -116,12 +106,12 @@ public class Equipo
         this.tipo = tipo;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getCausaCambio() {
+        return causaCambio;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setCausaCambio(String causaCambio) {
+        this.causaCambio = causaCambio;
     }
 
     public Calendar getFechaIngreso() {
@@ -143,11 +133,9 @@ public class Equipo
     public void print()
     {
         System.out.println("*************************************************");
-        //System.out.println("*** Codigo: "+this.codigo);
         System.out.println("*** Nombre: "+this.nombre);
         System.out.println("*** Tipo: "+this.tipo);
-        //System.out.println("*** Posi: "+this.posi);
-        System.out.println("*** Descripcion: "+this.descripcion);
+        //System.out.println("*** Descripcion: "+this.causaCambio);
         if(this.fechaIngreso != null)
         {
             System.out.println("*** FechaIngreso: "+this.formatoCalendario(this.fechaIngreso));
@@ -156,7 +144,7 @@ public class Equipo
         {
             System.out.println("*** FechaIngreso: Error");
         }
-        System.out.println("*** Estado: " + this.estado);
+        System.out.println("*** Identificador caja paño: " + this.idCajaPaño);
         System.out.println("*** Dias Operativos: "+this.actualizarDiasOp());
         if(this.fechaSalida != null)
         {
@@ -204,7 +192,7 @@ public class Equipo
         System.out.println("*** Nombre: " + this.nombre);
         System.out.println("*** Proveedor: " + this.proveedor);
         System.out.println("*** Fecha de ingreso: " + this.formatoCalendario(this.fechaIngreso));
-        System.out.println("*** Estado: " + this.estado);
+        System.out.println("*** Estado: " + this.idCajaPaño);
         System.out.println("*** Dias de operacion: " + this.diasOp);
         System.out.println("*** Proximo cambio: " + this.fechaSalida);
         System.out.println("**********************************************************");

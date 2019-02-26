@@ -24,10 +24,16 @@ public class Datos
     private ArrayList<Equipo> hTransversal;
     private ArrayList<Equipo> hExHumedo;
     private ArrayList<Equipo> hExSeco;
+    private ArrayList<Equipo> hCintaEn;
+    private ArrayList<Equipo> hCHP1;
+    private ArrayList<Equipo> hCHP2;
+    private ArrayList<Equipo> hCHP3;
+    private ArrayList<Equipo> hCHS;
+    private ArrayList<Equipo> hCHT;
     
     public Datos()
     {
-        this.Actual = new ArrayList<>();
+        this.Actual = new ArrayList<>(16);
         this.hPickUp = new ArrayList<>();
         this.h2daPrensa = new ArrayList<>();
         this.h3raSuperior = new ArrayList<>();
@@ -38,6 +44,12 @@ public class Datos
         this.hTransversal = new ArrayList<>();
         this.hExHumedo = new ArrayList<>();
         this.hExSeco = new ArrayList<>();
+        this.hCintaEn = new ArrayList<>();
+        this.hCHP1 = new ArrayList<>();
+        this.hCHP2 = new ArrayList<>();
+        this.hCHP3 = new ArrayList<>();
+        this.hCHS = new ArrayList<>();
+        this.hCHT = new ArrayList<>();
     }
 
     public ArrayList<Equipo> getActual() {
@@ -126,6 +138,54 @@ public class Datos
 
     public void sethExSeco(ArrayList<Equipo> hExSeco) {
         this.hExSeco = hExSeco;
+    }
+
+    public ArrayList<Equipo> gethCintaEn() {
+        return hCintaEn;
+    }
+
+    public void sethCintaEn(ArrayList<Equipo> hCintaEn) {
+        this.hCintaEn = hCintaEn;
+    }
+
+    public ArrayList<Equipo> gethCHP1() {
+        return hCHP1;
+    }
+
+    public void sethCHP1(ArrayList<Equipo> hCHP1) {
+        this.hCHP1 = hCHP1;
+    }
+
+    public ArrayList<Equipo> gethCHP2() {
+        return hCHP2;
+    }
+
+    public void sethCHP2(ArrayList<Equipo> hCHP2) {
+        this.hCHP2 = hCHP2;
+    }
+
+    public ArrayList<Equipo> gethCHP3() {
+        return hCHP3;
+    }
+
+    public void sethCHP3(ArrayList<Equipo> hCHP3) {
+        this.hCHP3 = hCHP3;
+    }
+
+    public ArrayList<Equipo> gethCHS() {
+        return hCHS;
+    }
+
+    public void sethCHS(ArrayList<Equipo> hCHS) {
+        this.hCHS = hCHS;
+    }
+
+    public ArrayList<Equipo> gethCHT() {
+        return hCHT;
+    }
+
+    public void sethCHT(ArrayList<Equipo> hCHT) {
+        this.hCHT = hCHT;
     }
 
     

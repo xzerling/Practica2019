@@ -51,6 +51,12 @@ public final class SpreadSheet
     private final Sheet hojaHistoricaTransversal;
     private final Sheet hojaHistoricaExHumedo;
     private final Sheet hojaHistoricaExSeco;
+    private final Sheet hojaHistoricaCintaEn;
+    private final Sheet hojaHistoricaCHP1;
+    private final Sheet hojaHistoricaCHP2;
+    private final Sheet hojaHistoricaCHP3;
+    private final Sheet hojaHistoricaCHS;
+    private final Sheet hojaHistoricaCHT;
 
     // estilo de las celdas del encabezado (con el nombre de las columnas)
     private final CellStyle estiloTitulo;
@@ -85,6 +91,12 @@ public final class SpreadSheet
     Row filacTransversal;
     Row filaExHumedo;
     Row filaExSeco;
+    Row filaCintaEn;
+    Row filaCHP1;
+    Row filaCHP2;
+    Row filaCHP3;
+    Row filaCHS;
+    Row filaCHT;
 
     public SpreadSheet()
     {
@@ -100,12 +112,30 @@ public final class SpreadSheet
         this.hojaHistoricaTransversal = this.libro.createSheet("Historial C. Transversal");
         this.hojaHistoricaExHumedo = this.libro.createSheet("Historial Extremo Humedo");
         this.hojaHistoricaExSeco = this.libro.createSheet("Historial Extremo Seco");
+        this.hojaHistoricaCintaEn = this.libro.createSheet("Historial Cinta Enhebrado");
+        this.hojaHistoricaCHP1 = this.libro.createSheet("Historial CHP1");
+        this.hojaHistoricaCHP2 = this.libro.createSheet("Historial CHP2");
+        this.hojaHistoricaCHP3 = this.libro.createSheet("Historial CHP3");
+        this.hojaHistoricaCHS = this.libro.createSheet("Historial CHS");
+        this.hojaHistoricaCHT = this.libro.createSheet("Historial CHT");
         this.estiloTitulo = getEstiloTitulo();
         this.estiloCelda = getEstiloCelda();
         this.estiloCelda2 = getEstiloCelda2();
         this.equipos = new ArrayList();
         this.arrayPickUp = new ArrayList();
         
+        
+        //this.crearPlantilla(this.hojaHistoricaPickUp);
+        //this.crearPlantilla(this.hojaHistorica2daPrensa);
+        /*
+        this.crearPlantilla(this.hojaHistorica3raSuperior);
+        this.crearPlantilla(this.hojaHistorica3raInferior);
+        this.crearPlantilla(this.hojaHistorica3TelaSup);
+        this.crearPlantilla(this.hojaHistorica3TelaInf);
+        this.crearPlantilla(this.hojaHistoricaManta);
+        this.crearPlantilla(this.hojaHistoricaTransversal);
+        this.crearPlantilla(this.hojaHistoricaExHumedo);
+        this.crearPlantilla(this.hojaHistoricaExSeco);*/
         this.crearPlantilla();
 
     }
@@ -203,22 +233,36 @@ public final class SpreadSheet
     {
         final Row filaEncabezado = getNuevaFila(this.hojaActual);
         final Row filaEncabezado2 = getNuevaFila(this.hojaHistoricaPickUp);
+        final Row filaEncabezado3 = getNuevaFila(this.hojaHistorica2daPrensa);
         int numeroCelda = 0;
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Posición paños - telas");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Proveedor");
-        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Instalado");
-        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Estado      ");
+        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Codigo Caja");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Días de operacion");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Proximo cambio");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Plan Operativo");
+        
         numeroCelda = 0;
+
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Posición paños - telas");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Proveedor");
-        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Instalado");
-        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Estado      ");
+        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Instalado  ");
+        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Codigo Caja");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Días de operacion");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Proximo cambio");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Causa de cambio");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Instalado");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Estado      ");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Plan Operativo");
 
     }
         
@@ -285,8 +329,19 @@ public final class SpreadSheet
     {
         this.ajustaColumnas(this.hojaActual);
         this.ajustaColumnas(this.hojaHistoricaPickUp);
+        /*this.ajustaColumnas(this.hojaHistorica2daPrensa);
+        this.ajustaColumnas(this.hojaHistorica3raSuperior);
+        this.ajustaColumnas(this.hojaHistorica3raInferior);
+        this.ajustaColumnas(this.hojaHistorica3TelaSup);
+        this.ajustaColumnas(this.hojaHistorica3TelaInf);
+        this.ajustaColumnas(this.hojaHistoricaManta);
+        this.ajustaColumnas(this.hojaHistoricaTransversal);
+        this.ajustaColumnas(this.hojaHistoricaExHumedo);
+        this.ajustaColumnas(this.hojaHistoricaExSeco);
+        this.ajustaColumnas(this.hojaHistoricaManta);*/
         this.crearHojaActual(this.equipos);
         this.crearHojaPickUp(this.arrayPickUp);
+        this.crearHoja2daPrensa(this.array2daPrensa);
         //Row fila = this.crearHojaPickUp();
         final OutputStream outputStream = new FileOutputStream("BD.xls");
         System.out.println("nuevo bd creado");
@@ -323,7 +378,7 @@ public final class SpreadSheet
         Row fila = this.getNuevaFila(this.hojaHistoricaPickUp);
         Cell pickup = fila.createCell(0);
         pickup.setCellStyle(estiloCelda);
-        pickup.setCellValue("PickUp");
+        pickup.setCellValue("Pick up");
         this.crearHojaPickUp(this.arrayPickUp);
         return fila;
     }
@@ -341,6 +396,12 @@ public final class SpreadSheet
         this.filacTransversal = this.getNuevaFila(this.hojaActual);
         this.filaExHumedo = this.getNuevaFila(this.hojaActual);
         this.filaExSeco = this.getNuevaFila(this.hojaActual);
+        this.filaCintaEn = this.getNuevaFila(this.hojaActual);
+        this.filaCHP1 = this.getNuevaFila(this.hojaActual);
+        this.filaCHP2 = this.getNuevaFila(this.hojaActual);
+        this.filaCHP3 = this.getNuevaFila(this.hojaActual);
+        this.filaCHS = this.getNuevaFila(this.hojaActual);
+        this.filaCHT = this.getNuevaFila(this.hojaActual);
         
         Cell Pickup = filaPickUp.createCell(0);
         Cell segundaPrensa = fila2daPrensa.createCell(0);
@@ -350,8 +411,14 @@ public final class SpreadSheet
         Cell telaInf = filaTelaInf.createCell(0);
         Cell manta = filaManta.createCell(0);
         Cell cTransversal = filacTransversal.createCell(0);
-        Cell Humedo = filaExHumedo.createCell(0);
-        Cell Seco = filaExSeco.createCell(0);
+        Cell exHumedo = filaExHumedo.createCell(0);
+        Cell exSeco = filaExSeco.createCell(0);
+        Cell cintaEn = filaCintaEn.createCell(0);
+        Cell chp1 = filaCHP1.createCell(0);
+        Cell chp2 = filaCHP2.createCell(0);
+        Cell chp3 = filaCHP3.createCell(0);
+        Cell chs = filaCHS.createCell(0);
+        Cell cht = filaCHT.createCell(0);
         
         Pickup.setCellStyle(estiloCelda);
         segundaPrensa.setCellStyle(estiloCelda);
@@ -361,8 +428,14 @@ public final class SpreadSheet
         telaInf.setCellStyle(estiloCelda);
         manta.setCellStyle(estiloCelda);
         cTransversal.setCellStyle(estiloCelda);
-        Humedo.setCellStyle(estiloCelda);
-        Seco.setCellStyle(estiloCelda);
+        exHumedo.setCellStyle(estiloCelda);
+        exSeco.setCellStyle(estiloCelda);
+        cintaEn.setCellStyle(estiloCelda);
+        chp1.setCellStyle(estiloCelda);
+        chp2.setCellStyle(estiloCelda);
+        chp3.setCellStyle(estiloCelda);
+        chs.setCellStyle(estiloCelda);
+        cht.setCellStyle(estiloCelda);
         
         Pickup.setCellValue("Pick up");
         segundaPrensa.setCellValue("2da Prensa");
@@ -372,39 +445,48 @@ public final class SpreadSheet
         telaInf.setCellValue("Tela Inferior");
         manta.setCellValue("Manta");
         cTransversal.setCellValue("C. Transversal");
-        Humedo.setCellValue("Tela Extremo Humedo");
-        Seco.setCellValue("Tela Extremo Seco");
-        
+        exHumedo.setCellValue("Tela Extremo Humedo");
+        exSeco.setCellValue("Tela Extremo Seco");
+        cintaEn.setCellValue("Cinta Enhebrado");
+        chp1.setCellValue("CHP1");
+        chp2.setCellValue("CHP2");
+        chp3.setCellValue("CHP3");
+        chs.setCellValue("CHS");
+        cht.setCellValue("CHT");
+
     }
     
     public boolean crearHojaActual(ArrayList<Equipo> equipos)
     {
         //System.out.println("creando hoja actual");
+        //this.crearFilas();
         int cantidad = equipos.size();
         int codInt;
         String prov = "";
         String posi = "";
         String instalado = "";
-        String estado = "";
+        String idcp = "";
         int dOps;
         String cambio = "";
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         int pop;
+
         
         for (int i = 0; i < cantidad; i++)
         {
+            //System.out.println("nombre: "+equipos.get(i).getNombre());
             equipos.get(i).actualizarDiasOp();
             codInt = equipos.get(i).getCodInterno();
             prov = equipos.get(i).getProveedor();
             //posi = equipos.get(i).getPosi();
             instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
-            estado = equipos.get(i).getEstado();
+            idcp = equipos.get(i).getIdCajaPaño();
             dOps = equipos.get(i).getDiasOp();
             if(equipos.get(i).getFechaSalida() != null){
             cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
             //equipos.get(i).print();
             pop = equipos.get(i).getPlanOperativo();
-            this.creaFila(codInt, prov, posi, instalado, estado, dOps, cambio, pop);
+            this.creaFila(codInt, prov, posi, instalado, idcp, dOps, cambio, pop);
         }
         return true;
     }
@@ -416,11 +498,51 @@ public final class SpreadSheet
         int cantidad = equipos.size();
         String prov = "";
         String instalado = "";
-        String estado = "";
+        String idcp = "";
         int dOps;
         String cambio = "";
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         int pop;
+        String causa = "";
+        
+        for (int i = 0; i < cantidad; i++)
+        {
+            //System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaPickUp.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("Pick up");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+
+            
+        }
+    }
+    
+    public void crearHoja2daPrensa(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
         for (int i = 0; i < cantidad; i++)
         {
             System.out.println("i: "+i);
@@ -428,22 +550,21 @@ public final class SpreadSheet
             prov = equipos.get(i).getProveedor();
             //posi = equipos.get(i).getPosi();
             instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
-            estado = equipos.get(i).getEstado();
+            idcp = equipos.get(i).getIdCajaPaño();
             dOps = equipos.get(i).getDiasOp();
             if(equipos.get(i).getFechaSalida() != null){
             cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
             //equipos.get(i).print();
             pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
             
 
-            Row fila = this.hojaHistoricaPickUp.createRow(i+1);
+            Row fila = this.hojaHistorica2daPrensa.createRow(i+1);
             Cell pickup = fila.createCell(0);
             pickup.setCellStyle(estiloCelda);
-            pickup.setCellValue("PickUp");
-            this.crearFilaHPickup(fila, prov, instalado, estado, dOps, cambio, pop);
-            System.out.println("fila creada");
-
-            
+            pickup.setCellValue("2da Prensa");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
         }
     }
     
@@ -497,6 +618,30 @@ public final class SpreadSheet
         {
             this.crearFilaExSec(pro, inst, est, dO, cam, pop);
         }
+        if(i == 10)
+        {
+            this.crearFilaCintaEn(pro, inst, est, dO, cam, pop);
+        }
+        if(i == 11)
+        {
+            this.crearFilaCHP1(pro, inst, est, dO, cam, pop);
+        }
+        if(i == 12)
+        {
+            this.crearFilaCHP2(pro, inst, est, dO, cam, pop);
+        }
+        if(i == 13)
+        {
+            this.crearFilaCHP3(pro, inst, est, dO, cam, pop);
+        }
+        if(i == 14)
+        {
+            this.crearFilaCHS(pro, inst, est, dO, cam, pop);
+        }
+        if(i == 15)
+        {
+            this.crearFilaCHT(pro, inst, est, dO, cam, pop);
+        }
     }
 
     private void crearFilaPickup(String pro, String inst,
@@ -529,7 +674,7 @@ public final class SpreadSheet
     }
     
         private void crearFilaHPickup(Row fila, String pro, String inst,
-            String est,int dO, String cam, int pop) 
+            String est,int dO, String cam, int pop, String causa) 
     {
         int i = 1;
         Cell prov = fila.createCell(i);
@@ -539,6 +684,7 @@ public final class SpreadSheet
         Cell dOps = fila.createCell(i+3);
         Cell cambio = fila.createCell(i+4);
         Cell planOp = fila.createCell(i+5);
+        Cell causas = fila.createCell(i+6);
         
         prov.setCellStyle(estiloCelda2);
         //posi.setCellStyle(estiloCelda2);
@@ -547,6 +693,7 @@ public final class SpreadSheet
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
         planOp.setCellStyle(estiloCelda2);
+        causas.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
         //posi.setCellValue(pos);
@@ -555,6 +702,7 @@ public final class SpreadSheet
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
         planOp.setCellValue(pop);
+        causas.setCellValue(causa);
     }
 
     private void crearFila2daPrensa(String pro, String inst,
@@ -817,7 +965,179 @@ public final class SpreadSheet
         cambio.setCellValue(cam);
         planOp.setCellValue(pop);
     }
-
+    private void crearFilaCintaEn(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaCintaEn.createCell(1);
+        //Cell posi = this.filaCintaEn.createCell(2);
+        Cell instalado = this.filaCintaEn.createCell(i+1);
+        Cell estado = this.filaCintaEn.createCell(i+2);
+        Cell dOps = this.filaCintaEn.createCell(i+3);
+        Cell cambio = this.filaCintaEn.createCell(i+4);
+        Cell planOp = this.filaCintaEn.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+    private void crearFilaCHP1(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaCHP1.createCell(1);
+        //Cell posi = this.filaCHP1.createCell(2);
+        Cell instalado = this.filaCHP1.createCell(i+1);
+        Cell estado = this.filaCHP1.createCell(i+2);
+        Cell dOps = this.filaCHP1.createCell(i+3);
+        Cell cambio = this.filaCHP1.createCell(i+4);
+        Cell planOp = this.filaCHP1.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+    
+    private void crearFilaCHP2(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaCHP2.createCell(1);
+        //Cell posi = this.filaCHP2.createCell(2);
+        Cell instalado = this.filaCHP2.createCell(i+1);
+        Cell estado = this.filaCHP2.createCell(i+2);
+        Cell dOps = this.filaCHP2.createCell(i+3);
+        Cell cambio = this.filaCHP2.createCell(i+4);
+        Cell planOp = this.filaCHP2.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+    
+    private void crearFilaCHP3(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaCHP3.createCell(1);
+        //Cell posi = this.filaCHP3.createCell(2);
+        Cell instalado = this.filaCHP3.createCell(i+1);
+        Cell estado = this.filaCHP3.createCell(i+2);
+        Cell dOps = this.filaCHP3.createCell(i+3);
+        Cell cambio = this.filaCHP3.createCell(i+4);
+        Cell planOp = this.filaCHP3.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+    
+    private void crearFilaCHS(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaCHS.createCell(1);
+        //Cell posi = this.filaCHS.createCell(2);
+        Cell instalado = this.filaCHS.createCell(i+1);
+        Cell estado = this.filaCHS.createCell(i+2);
+        Cell dOps = this.filaCHS.createCell(i+3);
+        Cell cambio = this.filaCHS.createCell(i+4);
+        Cell planOp = this.filaCHS.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+    
+    private void crearFilaCHT(String pro, String inst,
+            String est,int dO, String cam, int pop) 
+    {
+        int i = 1;
+        Cell prov = this.filaCHT.createCell(1);
+        //Cell posi = this.filaCHT.createCell(2);
+        Cell instalado = this.filaCHT.createCell(i+1);
+        Cell estado = this.filaCHT.createCell(i+2);
+        Cell dOps = this.filaCHT.createCell(i+3);
+        Cell cambio = this.filaCHT.createCell(i+4);
+        Cell planOp = this.filaCHT.createCell(i+5);
+        
+        prov.setCellStyle(estiloCelda2);
+        //posi.setCellStyle(estiloCelda2);
+        instalado.setCellStyle(estiloCelda2);
+        estado.setCellStyle(estiloCelda2);
+        dOps.setCellStyle(estiloCelda2);
+        cambio.setCellStyle(estiloCelda2);
+        planOp.setCellStyle(estiloCelda2);
+        
+        prov.setCellValue(pro);
+        //posi.setCellValue(pos);
+        instalado.setCellValue(inst);
+        estado.setCellValue(est);
+        dOps.setCellValue(dO);
+        cambio.setCellValue(cam);
+        planOp.setCellValue(pop);
+    }
+    
 
     void setEquipos(ArrayList equipos) 
     {

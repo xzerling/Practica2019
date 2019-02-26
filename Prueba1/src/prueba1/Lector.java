@@ -35,21 +35,17 @@ public class Lector
         }
                 
         int opcion = this.scanner.nextInt();
+        this.buffer();
         return opcion;
     }   
     
     /**
-     * Lee y comprueba un string por teclado.
+     * Lee un string por teclado.
      * 
      * @return 
      */
     public String ingresarTexto()
     {
-        /*while( !this.scanner.hasNextLine() )
-        {
-            this.scanner.nextInt();
-            System.out.println("Error, ingrese un nombre.");            
-        }*/
         String texto = this.scanner.nextLine();
         return texto;
     }

@@ -21,6 +21,12 @@ public class Flag
     private boolean fTransversal;
     private boolean fExHumedo;
     private boolean fExSeco;
+    private boolean fCintaEn;
+    private boolean fCHP1;
+    private boolean fCHP2;
+    private boolean fCHP3;
+    private boolean fCHS;
+    private boolean fCHT;
     
     public Flag()
     {
@@ -34,9 +40,15 @@ public class Flag
         this.fTransversal = false;
         this.fExHumedo = false;
         this.fExSeco = false;
+        this.fCintaEn = false;
+        this.fCHP1 = false;
+        this.fCHP2 = false;
+        this.fCHP3 = false;
+        this.fCHS = false;
+        this.fCHT = false;
     }
 
-    public boolean isfPickUpTrue() {
+    public boolean isfPickUp() {
         return fPickUp;
     }
 
@@ -44,7 +56,7 @@ public class Flag
         this.fPickUp = fPickUp;
     }
 
-    public boolean isF2daPrensaTrue() {
+    public boolean isF2daPrensa() {
         return f2daPrensa;
     }
 
@@ -52,7 +64,7 @@ public class Flag
         this.f2daPrensa = f2daPrensa;
     }
 
-    public boolean isF3raSuperiorTrue() {
+    public boolean isF3raSuperior() {
         return f3raSuperior;
     }
 
@@ -60,7 +72,7 @@ public class Flag
         this.f3raSuperior = f3raSuperior;
     }
 
-    public boolean isF3raInferiorTrue() {
+    public boolean isF3raInferior() {
         return f3raInferior;
     }
 
@@ -68,7 +80,7 @@ public class Flag
         this.f3raInferior = f3raInferior;
     }
 
-    public boolean isF3TelaSupTrue() {
+    public boolean isF3TelaSup() {
         return f3TelaSup;
     }
 
@@ -76,7 +88,7 @@ public class Flag
         this.f3TelaSup = f3TelaSup;
     }
 
-    public boolean isF3TelaInfTrue() {
+    public boolean isF3TelaInf() {
         return f3TelaInf;
     }
 
@@ -84,7 +96,7 @@ public class Flag
         this.f3TelaInf = f3TelaInf;
     }
 
-    public boolean isfMantaTrue() {
+    public boolean isfManta() {
         return fManta;
     }
 
@@ -92,7 +104,7 @@ public class Flag
         this.fManta = fManta;
     }
 
-    public boolean isfTransversalTrue() {
+    public boolean isfTransversal() {
         return fTransversal;
     }
 
@@ -100,7 +112,7 @@ public class Flag
         this.fTransversal = fTransversal;
     }
 
-    public boolean isfExHumedoTrue() {
+    public boolean isfExHumedo() {
         return fExHumedo;
     }
 
@@ -114,6 +126,54 @@ public class Flag
 
     public void setfExSeco(boolean fExSeco) {
         this.fExSeco = fExSeco;
+    }
+
+    public boolean isfCintaEn() {
+        return fCintaEn;
+    }
+
+    public void setfCintaEn(boolean fCintaEn) {
+        this.fCintaEn = fCintaEn;
+    }
+
+    public boolean isfCHP1() {
+        return fCHP1;
+    }
+
+    public void setfCHP1(boolean fCHP1) {
+        this.fCHP1 = fCHP1;
+    }
+
+    public boolean isfCHP2() {
+        return fCHP2;
+    }
+
+    public void setfCHP2(boolean fCHP2) {
+        this.fCHP2 = fCHP2;
+    }
+
+    public boolean isfCHP3() {
+        return fCHP3;
+    }
+
+    public void setfCHP3(boolean fCHP3) {
+        this.fCHP3 = fCHP3;
+    }
+
+    public boolean isfCHS() {
+        return fCHS;
+    }
+
+    public void setfCHS(boolean fCHS) {
+        this.fCHS = fCHS;
+    }
+
+    public boolean isfCHT() {
+        return fCHT;
+    }
+
+    public void setfCHT(boolean fCHT) {
+        this.fCHT = fCHT;
     }
     
 }

@@ -36,9 +36,10 @@ public class Menu
     
    public void mainMenu()
    {
-       System.out.println("1. Ingresar Equipo");
-       System.out.println("2. Modificar Equipo");
-       System.out.println("3. Eliminar Equipo");
+       System.out.println("1. Ingresar Equipo Tela/Paño");
+       System.out.println("2. Ingresar Equipo Canastillo Harnero");
+       //System.out.println("2. Modificar Equipo");
+       //System.out.println("3. Eliminar Equipo");
        System.out.println("4. Ver Equipos");
        System.out.println("6. Hoja de calculo.");
        System.out.println("0. Salir");
@@ -57,7 +58,8 @@ public class Menu
         System.out.println("Nombre del equipo: ");
         this.lector.ingresarTexto();
         System.out.println("descripcion: ");
-        System.out.println("Fecha de ingreso: ");
+     
+    System.out.println("Fecha de ingreso: ");
         System.out.println(": ");
     }*/
     
@@ -73,6 +75,18 @@ public class Menu
         
     }
     
+    public void printTipoHarnero()
+    {
+        System.out.println("1. Canastillo Harnero Primario 1");
+        System.out.println("2. Canastillo Harnero Primario 2");
+        System.out.println("3. Canastillo Harnero Primario 3");
+        System.out.println("4. Canastillo Harnero Secundario");
+        System.out.println("5. Canastillo Harnero Terciario");
+        System.out.println("0. Volver menu anterior");
+        System.out.println("");
+        System.out.print("Elegir Opción: ");
+    }
+    
     public void printTipoEquipos()
     {
         System.out.println("1. Pick Up");
@@ -83,9 +97,12 @@ public class Menu
         System.out.println("6. Tela Inferior");
         System.out.println("7. Manta");
         System.out.println("8. C.Transversal");
-        System.out.println("9. Extremo Seco");
-        System.out.println("10. Extremo Humedo");
+        System.out.println("9. Extremo Humedo");
+        System.out.println("10. Extremo Seco");
+        System.out.println("11. Cinta Enhebrado");
         System.out.println("0. Volver menu anterior");
+        System.out.println("");
+        System.out.print("Elegir Opción: ");
     }
     
     public void printOpciones()
@@ -99,12 +116,26 @@ public class Menu
     
     public void menuPrincipal()
     {
-        System.out.println("1. Registrar equipo.");
-        System.out.println("2. Modificar datos de equipo.");
+        System.out.println("1. Ingresar Equipo Tela/Paño");
+        System.out.println("2. Ingresar Equipo Canastillo Harnero");
         System.out.println("3. Ver equipos.");
         System.out.println("4. Importar a Excel");
         System.out.println("5. Cargar BD");
         System.out.println("0. Salir");
+        System.out.println("");
+        System.out.print("Elegir Opción: ");
+    }
+    
+    public void printCausaCambio()
+    {
+        System.out.println("Ingresando nuevo equipo al sistema.");
+        System.out.println("Indicar cauas de cambio del equipo anterior.");
+        System.out.println("1. Plan Operativo.");
+        System.out.println("2. Oportunidad Operativa");
+        System.out.println("3. Daño en el Equipo");
+        System.out.println("4. Otro");
+        System.out.println("");
+        System.out.print("Elegir Opción: ");
     }
     
     public void printError()
