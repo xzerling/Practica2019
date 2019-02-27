@@ -79,6 +79,12 @@ public final class SpreadSheet
     private ArrayList arrayTransversal;
     private ArrayList arrayExHumedo;
     private ArrayList arrayExSeco;
+    private ArrayList arrayCintaEn;
+    private ArrayList arrayCHP1;
+    private ArrayList arrayCHP2;
+    private ArrayList arrayCHP3;
+    private ArrayList arrayCHS;
+    private ArrayList arrayCHT;
     
     
     Row filaPickUp;
@@ -124,18 +130,6 @@ public final class SpreadSheet
         this.equipos = new ArrayList();
         this.arrayPickUp = new ArrayList();
         
-        
-        //this.crearPlantilla(this.hojaHistoricaPickUp);
-        //this.crearPlantilla(this.hojaHistorica2daPrensa);
-        /*
-        this.crearPlantilla(this.hojaHistorica3raSuperior);
-        this.crearPlantilla(this.hojaHistorica3raInferior);
-        this.crearPlantilla(this.hojaHistorica3TelaSup);
-        this.crearPlantilla(this.hojaHistorica3TelaInf);
-        this.crearPlantilla(this.hojaHistoricaManta);
-        this.crearPlantilla(this.hojaHistoricaTransversal);
-        this.crearPlantilla(this.hojaHistoricaExHumedo);
-        this.crearPlantilla(this.hojaHistoricaExSeco);*/
         this.crearPlantilla();
 
     }
@@ -227,42 +221,261 @@ public final class SpreadSheet
     public void setArrayExSeco(ArrayList arrayExSeco) {
         this.arrayExSeco = arrayExSeco;
     }
+
+    public ArrayList getArrayCintaEn() {
+        return arrayCintaEn;
+    }
+
+    public void setArrayCintaEn(ArrayList arrayCintaEn) {
+        this.arrayCintaEn = arrayCintaEn;
+    }
+
+    public ArrayList getArrayCHP1() {
+        return arrayCHP1;
+    }
+
+    public void setArrayCHP1(ArrayList arrayCHP1) {
+        this.arrayCHP1 = arrayCHP1;
+    }
+
+    public ArrayList getArrayCHP2() {
+        return arrayCHP2;
+    }
+
+    public void setArrayCHP2(ArrayList arrayCHP2) {
+        this.arrayCHP2 = arrayCHP2;
+    }
+
+    public ArrayList getArrayCHP3() {
+        return arrayCHP3;
+    }
+
+    public void setArrayCHP3(ArrayList arrayCHP3) {
+        this.arrayCHP3 = arrayCHP3;
+    }
+
+    public ArrayList getArrayCHS() {
+        return arrayCHS;
+    }
+
+    public void setArrayCHS(ArrayList arrayCHS) {
+        this.arrayCHS = arrayCHS;
+    }
+
+    public ArrayList getArrayCHT() {
+        return arrayCHT;
+    }
+
+    public void setArrayCHT(ArrayList arrayCHT) {
+        this.arrayCHT = arrayCHT;
+    }
+    
     
     // crea la fila y celdas del encabezado con el nombre de las columnas
     private void anadeFilaEncabezado()
     {
         final Row filaEncabezado = getNuevaFila(this.hojaActual);
-        final Row filaEncabezado2 = getNuevaFila(this.hojaHistoricaPickUp);
-        final Row filaEncabezado3 = getNuevaFila(this.hojaHistorica2daPrensa);
+        final Row filaEncabezado0 = getNuevaFila(this.hojaHistoricaPickUp);
+        final Row filaEncabezado1 = getNuevaFila(this.hojaHistorica2daPrensa);
+        final Row filaEncabezado2 = getNuevaFila(this.hojaHistorica3raSuperior);
+        final Row filaEncabezado3 = getNuevaFila(this.hojaHistorica3raInferior);
+        final Row filaEncabezado4 = getNuevaFila(this.hojaHistorica3TelaSup);
+        final Row filaEncabezado5 = getNuevaFila(this.hojaHistorica3TelaInf);
+        final Row filaEncabezado6 = getNuevaFila(this.hojaHistoricaManta);
+        final Row filaEncabezado7 = getNuevaFila(this.hojaHistoricaTransversal);
+        final Row filaEncabezado8 = getNuevaFila(this.hojaHistoricaExHumedo);
+        final Row filaEncabezado9 = getNuevaFila(this.hojaHistoricaExSeco);
+        final Row filaEncabezado10 = getNuevaFila(this.hojaHistoricaCintaEn);
+        final Row filaEncabezado11 = getNuevaFila(this.hojaHistoricaCHP1);
+        final Row filaEncabezado12 = getNuevaFila(this.hojaHistoricaCHP2);
+        final Row filaEncabezado13 = getNuevaFila(this.hojaHistoricaCHP3);
+        final Row filaEncabezado14 = getNuevaFila(this.hojaHistoricaCHS);
+        final Row filaEncabezado15 = getNuevaFila(this.hojaHistoricaCHT);
         int numeroCelda = 0;
+        
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Posición paños - telas");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Proveedor");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Instalado   ");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Codigo Caja");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Días de operacion");
         creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Proximo cambio");
-        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado, numeroCelda++, "Plan Operativo   ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado0, numeroCelda++, "Causa de cambio    ");
+       
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado1, numeroCelda++, "Causa de cambio    ");
         
         numeroCelda = 0;
 
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Posición paños - telas");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Proveedor");
-        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Instalado  ");
+        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Instalado   ");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Codigo Caja");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Días de operacion");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Proximo cambio");
         creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Plan Operativo");
-        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Causa de cambio");
+        creaCeldaEncabezado(filaEncabezado2, numeroCelda++, "Causa de cambio    ");
         
         numeroCelda = 0;
 
         creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Posición paños - telas");
         creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Proveedor");
-        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Instalado");
-        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Estado      ");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Codigo Caja");
         creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Días de operacion");
         creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Proximo cambio");
         creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado3, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado4, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado5, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado6, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado7, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado8, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado9, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado10, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado11, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado12, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado13, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado14, numeroCelda++, "Causa de cambio    ");
+        
+        numeroCelda = 0;
+
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Posición paños - telas");
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Proveedor");
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Instalado   ");
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Codigo Caja");
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Días de operacion");
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Proximo cambio");
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Plan Operativo");
+        creaCeldaEncabezado(filaEncabezado15, numeroCelda++, "Causa de cambio    ");
 
     }
         
@@ -329,7 +542,8 @@ public final class SpreadSheet
     {
         this.ajustaColumnas(this.hojaActual);
         this.ajustaColumnas(this.hojaHistoricaPickUp);
-        /*this.ajustaColumnas(this.hojaHistorica2daPrensa);
+        this.ajustaColumnas(this.hojaHistorica2daPrensa);
+        
         this.ajustaColumnas(this.hojaHistorica3raSuperior);
         this.ajustaColumnas(this.hojaHistorica3raInferior);
         this.ajustaColumnas(this.hojaHistorica3TelaSup);
@@ -338,10 +552,29 @@ public final class SpreadSheet
         this.ajustaColumnas(this.hojaHistoricaTransversal);
         this.ajustaColumnas(this.hojaHistoricaExHumedo);
         this.ajustaColumnas(this.hojaHistoricaExSeco);
-        this.ajustaColumnas(this.hojaHistoricaManta);*/
+        this.ajustaColumnas(this.hojaHistoricaCintaEn);
+        this.ajustaColumnas(this.hojaHistoricaCHP1);
+        this.ajustaColumnas(this.hojaHistoricaCHP2);
+        this.ajustaColumnas(this.hojaHistoricaCHP3);
+        this.ajustaColumnas(this.hojaHistoricaCHS);
+        this.ajustaColumnas(this.hojaHistoricaCHT);
         this.crearHojaActual(this.equipos);
         this.crearHojaPickUp(this.arrayPickUp);
         this.crearHoja2daPrensa(this.array2daPrensa);
+        this.crearHoja3raSup(this.array3raSuperior);
+        this.crearHoja3raInf(this.array3raInferior);
+        this.crearHojaTelaSup(this.array3TelaSup);
+        this.crearHojaTelaInf(this.array3TelaInf);
+        this.crearHojaManta(this.arrayManta);
+        this.crearHojaTransversal(this.arrayTransversal);
+        this.crearHojaExHum(this.arrayExHumedo);
+        this.crearHojaExSec(this.arrayExSeco);
+        this.crearHojaCintaEn(this.arrayCintaEn);
+        this.crearHojaCHP1(this.arrayCHP1);
+        this.crearHojaCHP2(this.arrayCHP2);
+        this.crearHojaCHP3(this.arrayCHP3);
+        this.crearHojaCHS(this.arrayCHS);
+        this.crearHojaCHT(this.arrayCHT);
         //Row fila = this.crearHojaPickUp();
         final OutputStream outputStream = new FileOutputStream("BD.xls");
         System.out.println("nuevo bd creado");
@@ -486,7 +719,7 @@ public final class SpreadSheet
             cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
             //equipos.get(i).print();
             pop = equipos.get(i).getPlanOperativo();
-            this.creaFila(codInt, prov, posi, instalado, idcp, dOps, cambio, pop);
+            this.creaFila(codInt, prov, posi, instalado, idcp, dOps, cambio, pop, "");
         }
         return true;
     }
@@ -518,6 +751,7 @@ public final class SpreadSheet
             cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
             //equipos.get(i).print();
             pop = equipos.get(i).getPlanOperativo();
+            System.out.println("Causa: "+equipos.get(i).getCausaCambio());
             causa = equipos.get(i).getCausaCambio();
             
 
@@ -567,6 +801,507 @@ public final class SpreadSheet
             //System.out.println("fila creada");
         }
     }
+    public void crearHoja3raSup(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistorica3raSuperior.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("3ra Superior");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    public void crearHoja3raInf(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistorica3raInferior.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("3ra Inferior");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    public void crearHojaTelaSup(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistorica3TelaSup.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("Tela Superior");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    public void crearHojaTelaInf(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistorica3TelaInf.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("Tela Inferior");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    
+    public void crearHojaManta(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaManta.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("Manta");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    
+    public void crearHojaTransversal(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaTransversal.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("C. Transversal");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    public void crearHojaExHum(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaExHumedo.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("Tela Extremo Humedo");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    public void crearHojaExSec(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaExSeco.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("Tela Extremo Seco");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    public void crearHojaCintaEn(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaCintaEn.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("Cinta Enhebrado");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    public void crearHojaCHP1(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaCHP1.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("CHP1");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+    }
+    
+    public void crearHojaCHP2(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaCHP2.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("CHP2");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+
+    }
+    
+    public void crearHojaCHP3(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaCHP3.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("CHP3");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+
+    }
+    
+    public void crearHojaCHS(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaCHS.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("CHS");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+
+    }
+    
+    public void crearHojaCHT(ArrayList<Equipo> equipos)
+    {
+        int cantidad = equipos.size();
+        String prov = "";
+        String instalado = "";
+        String idcp = "";
+        int dOps;
+        String cambio = "";
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int pop;
+        String causa = "";
+        for (int i = 0; i < cantidad; i++)
+        {
+            System.out.println("i: "+i);
+            equipos.get(i).actualizarDiasOp();
+            prov = equipos.get(i).getProveedor();
+            //posi = equipos.get(i).getPosi();
+            instalado = df.format(equipos.get(i).getFechaIngreso().getTime());
+            idcp = equipos.get(i).getIdCajaPaño();
+            dOps = equipos.get(i).getDiasOp();
+            if(equipos.get(i).getFechaSalida() != null){
+            cambio = df.format(equipos.get(i).getFechaSalida().getTime());}
+            //equipos.get(i).print();
+            pop = equipos.get(i).getPlanOperativo();
+            causa = equipos.get(i).getCausaCambio();
+            
+
+            Row fila = this.hojaHistoricaCHT.createRow(i+1);
+            Cell pickup = fila.createCell(0);
+            pickup.setCellStyle(estiloCelda);
+            pickup.setCellValue("CHT");
+            this.crearFilaHPickup(fila, prov, instalado, idcp, dOps, cambio, pop, causa);
+            //System.out.println("fila creada");
+        }
+
+    }
+    
     
     
     public void crearPlantilla()
@@ -576,7 +1311,7 @@ public final class SpreadSheet
     }
     
     private void creaFila(int i, String pro, String pos, String inst,
-            String est,int dO, String cam, int pop)
+            String est,int dO, String cam, int pop, String causaCambio)
     {
         if(i == 0)
         {
@@ -655,22 +1390,23 @@ public final class SpreadSheet
         Cell dOps = this.filaPickUp.createCell(i+3);
         Cell cambio = this.filaPickUp.createCell(i+4);
         Cell planOp = this.filaPickUp.createCell(i+5);
+        //Cell causa = this.filaPickUp.createCell(i+6);
         
         prov.setCellStyle(estiloCelda2);
-        //posi.setCellStyle(estiloCelda2);
         instalado.setCellStyle(estiloCelda2);
         estado.setCellStyle(estiloCelda2);
         dOps.setCellStyle(estiloCelda2);
         cambio.setCellStyle(estiloCelda2);
         planOp.setCellStyle(estiloCelda2);
+        //causa.setCellStyle(estiloCelda2);
         
         prov.setCellValue(pro);
-        //posi.setCellValue(pos);
         instalado.setCellValue(inst);
         estado.setCellValue(est);
         dOps.setCellValue(dO);
         cambio.setCellValue(cam);
         planOp.setCellValue(pop);
+        //causa.setCellValue(causaCambio);
     }
     
         private void crearFilaHPickup(Row fila, String pro, String inst,

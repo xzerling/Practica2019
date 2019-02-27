@@ -49,8 +49,6 @@ public class Sistema
         this.sdf = new SimpleDateFormat("dd-MM-yyyy");
     }
     
-    
-    
     private Equipo buscarEquipo(int cod)
     {
         if(this.datos.getActual().size()>0)
@@ -103,10 +101,10 @@ public class Sistema
         {
             for (int i = 0; i < this.datos.getActual().size(); i++)
             {
-                Equipo equipo = (Equipo) this.datos.getActual().get(i);
-                if (equipo.getCodigoSap() == cod)
+                Equipo equipo = this.datos.getActual().get(i);
+                if (equipo.getCodInterno() == cod)
                 {
-                    this.datos.getActual().remove(equipo);
+                    this.datos.getActual().remove(i);
                 }
                 return true;
             }
@@ -164,9 +162,52 @@ public class Sistema
             {
                 this.flags.setfExSeco(true);
             }
+            else if(actual.get(i).getCodInterno() == 10)
+            {
+                this.flags.setfCintaEn(true);
+            }
+            else if(actual.get(i).getCodInterno() == 11)
+            {
+                this.flags.setfCHP1(true);
+            }
+            else if(actual.get(i).getCodInterno() == 12)
+            {
+                this.flags.setfCHP2(true);
+            }
+            else if(actual.get(i).getCodInterno() == 13)
+            {
+                this.flags.setfCHP3(true);
+            }
+            else if(actual.get(i).getCodInterno() == 14)
+            {
+                this.flags.setfCHS(true);
+            }
+            else if(actual.get(i).getCodInterno() == 15)
+            {
+                this.flags.setfCHT(true);
+            }
         }
     }
-
+    
+    public void cargarHistorial() throws ParseException, IOException
+    {
+        this.datos.sethPickUp(this.seeder.cargarHojas(0));
+        this.datos.setH2daPrensa(this.seeder.cargarHojas(1));
+        this.datos.setH3raSuperior(this.seeder.cargarHojas(2));
+        this.datos.setH3raInferior(this.seeder.cargarHojas(3));
+        this.datos.setH3TelaSup(this.seeder.cargarHojas(4));
+        this.datos.setH3TelaInf(this.seeder.cargarHojas(5));
+        this.datos.sethManta(this.seeder.cargarHojas(6));
+        this.datos.sethTransversal(this.seeder.cargarHojas(7));
+        this.datos.sethExHumedo(this.seeder.cargarHojas(8));
+        this.datos.sethExSeco(this.seeder.cargarHojas(9));
+        this.datos.sethCintaEn(this.seeder.cargarHojas(10));
+        this.datos.sethCHP1(this.seeder.cargarHojas(11));
+        this.datos.sethCHP2(this.seeder.cargarHojas(12));
+        this.datos.sethCHP3(this.seeder.cargarHojas(13));
+        this.datos.sethCHS(this.seeder.cargarHojas(14));
+        this.datos.sethCHT(this.seeder.cargarHojas(15));
+    }
     
     public boolean newInicio() throws ParseException, IOException
     {
@@ -174,8 +215,10 @@ public class Sistema
         try
         {
         this.datos.setActual(this.seeder.cargarArrayActual());
-        this.datos.sethPickUp(this.seeder.cargarArrayPickUp());
-        this.datos.setH2daPrensa(this.seeder.cargar2daPrensa());
+        this.cargarHistorial();
+        //this.datos.sethPickUp(this.seeder.cargarArrayPickUp());
+        //this.datos.setH2daPrensa(this.seeder.cargar2daPrensa());
+        
         }
         catch(FileNotFoundException e)
         {
@@ -218,10 +261,16 @@ public class Sistema
                                 break;
                              // PickUp       
                             case 1:
-                                //lector.buffer();
                                 
                                 //this.causaCambio(0);
-                                this.existeAntiguo(0);
+                                /*
+                                if(this.flags.isfPickUp())
+                                {
+                                    Equipo e = this.encuentraEquipo(0);
+                                    e.setCausaCambio(this.causa());
+                                }*/
+                                this.revisarCausa(0);
+                                //this.existeAntiguo(0);
                                 Equipo pickUp = this.creador.crearPickUp();
                                 pickUp = this.completarEquipo(pickUp);
                                 
@@ -230,25 +279,20 @@ public class Sistema
                                 
                              // 2da Prensa  
                             case 2:
-                                System.out.println("opcion 2 seleccionada");
-                                //lector.buffer();
-                                //this.causaCambio(1);
-                                System.out.println("pas+o causa cambio");
+                                this.revisarCausa(1);
                                 Equipo segPrensa = this.creador.crear2daPrensa();
                                 segPrensa = this.completarEquipo(segPrensa);
-                                this.existeAntiguo(1);
+                                
                                 this.datos.getActual().add(segPrensa);
                                 break;
                                 
                             //3ra Superior
                             case 3:
                                 
-                                //lector.buffer();
-                                
-                                //this.causaCambio(2);
+                                this.revisarCausa(2);
                                 Equipo terSup = this.creador.crear3raSuperior();
                                 terSup = this.completarEquipo(terSup);
-                                this.existeAntiguo(2);
+                                
                                 this.datos.getActual().add(terSup);
                                 break;
                                 
@@ -256,113 +300,85 @@ public class Sistema
                             //3ra Inferior
                             case 4:
                                 
-                                //lector.buffer();
-                                
-                                this.causaCambio(3);
+                                this.revisarCausa(3);
                                 Equipo terInf = this.creador.crear3raInferior();
                                 terInf = this.completarEquipo(terInf);
-                                this.existeAntiguo(3);
                                 this.datos.getActual().add(terInf);
                                 break;
                                 
                             //Tela Superior
                             case 5:
                                 
-                                //lector.buffer();
-                                
-                                this.causaCambio(4);
+                                this.revisarCausa(4);
                                 Equipo telaSup = this.creador.crearTelaSuperior();
                                 telaSup = this.completarEquipo(telaSup);
-                                this.existeAntiguo(4);
                                 this.datos.getActual().add(telaSup);
                                 break;
                                 
                             //Tela inferior
                             case 6:
-                                                                                                
-                                //lector.buffer();
                                 
+                                this.revisarCausa(5);
                                 Equipo telaInf = this.creador.crearTelaInferior();
                                 telaInf = this.completarEquipo(telaInf);
-                                this.existeAntiguo(5);
                                 this.datos.getActual().add(telaInf);
                                 break;
                                 
                             //Manta
                             case 7:
-                                                                                                
-                                //lector.buffer();
                                 
+                                this.revisarCausa(6);      
                                 Equipo manta = this.creador.crearManta();
                                 manta = this.completarEquipo(manta);
-                                this.existeAntiguo(6);
                                 this.datos.getActual().add(manta);
                                 break;
                                 
                             //C. Transversal
                             case 8:
                                 
-                                //lector.buffer();
-                                
+                                this.revisarCausa(7);
                                 Equipo cTransversal = this.creador.crearCTrnasversal();
                                 cTransversal = this.completarEquipo(cTransversal);
-                                this.existeAntiguo(7);
                                 this.datos.getActual().add(cTransversal);
                                 break;
                                 
                             //Extremo Humedo
                             case 9:
-                                                                                                
-                                //lector.buffer();
                                 
+                                this.revisarCausa(8); 
                                 Equipo exHumedo = this.creador.crearExHumedo();
                                 exHumedo = this.completarEquipo(exHumedo);
-                                this.existeAntiguo(8);
                                 this.datos.getActual().add(exHumedo);
                                 break;
                                 
                             //Extremo Seco
                             case 10:
-                                                                                                
-                                //lector.buffer();
                                 
+                                this.revisarCausa(9); 
                                 Equipo exSeco = this.creador.crearExSeco();
                                 exSeco = this.completarEquipo(exSeco);
-                                this.existeAntiguo(9);
                                 this.datos.getActual().add(exSeco);
                                 break;
                                 
                             //Cinta Enhebrado    
                             case 11:
-                                //lector.buffer();
                                 
+                                this.revisarCausa(10); 
                                 Equipo cintaEn = this.creador.crearCintaEn();
                                 cintaEn = this.completarEquipo(cintaEn);
-                                this.existeAntiguo(10);
                                 this.datos.getActual().add(cintaEn);
                                 break;
                         }
                     }
                     break;
                 
-                // Modificar atributos
+                // Equipos tipo harneros.
                 case 2:
-                    /*
-                    if (this.hayEquipos() == false)
-                    {
-                        System.out.println("No existen maquinas en el registro.");
-                        System.out.println("");
-                        break;
-                    }*/
-                    //lector.buffer();
-
-                    //this.menu.printModificarEquipo();
-                    //this.menu.printTipoHarnero();
-                    //System.out.print("Elegir una opción: ");
+                    
                     int subOpcionM = -1;
                     while(subOpcionM != 0)
                     {
-                        //this.menu.printModificarEquipo();
+                        this.verificarExsistencia(this.datos.getActual());
                         this.menu.printTipoHarnero();
                         subOpcionM = this.lector.leerEntero();
                         switch(subOpcionM)
@@ -375,58 +391,50 @@ public class Sistema
                                 
                              // Canastillo harnero Primario 1.
                             case 1:
-                                //lector.buffer();
                                 
+                                this.revisarCausa(11);
                                 Equipo CHP1 = this.creador.crearCHP1();
                                 CHP1 = this.completarEquipo(CHP1);
-                                this.existeAntiguo(11);
                                 this.datos.getActual().add(CHP1);
                                 break;
                                 
                             // Canastillo harnero Primario 2.
                             case 2:
                                 
-                                //lector.buffer();
-                                
+                                this.revisarCausa(12);
                                 Equipo CHP2 = this.creador.crearCHP2();
                                 CHP2 = this.completarEquipo(CHP2);
-                                this.existeAntiguo(12);
                                 this.datos.getActual().add(CHP2);
                                 break;
                                 
                             // Canastillo harnero Primario 3.
                             case 3:
                                 
-                                //lector.buffer();
-                                
+                                this.revisarCausa(13);
                                 Equipo CHP3 = this.creador.crearCHP3();
                                 CHP3 = this.completarEquipo(CHP3);
-                                this.existeAntiguo(13);
                                 this.datos.getActual().add(CHP3);
                                 break;
                                 
                             // Canastillo harnero Secundario.
                             case 4:
-                                //lector.buffer();
                                 
+                                this.revisarCausa(14);
                                 Equipo CHS = this.creador.crearCHS();
                                 CHS = this.completarEquipo(CHS);
-                                this.existeAntiguo(14);
                                 this.datos.getActual().add(CHS);
                                 break;
                                 
                             // Canastillo harnero Terciario.
                             case 5:
-                                //lector.buffer();
                                 
+                                this.revisarCausa(15);
                                 Equipo CHT = this.creador.crearCHT();
                                 CHT = this.completarEquipo(CHT);
-                                this.existeAntiguo(15);
                                 this.datos.getActual().add(CHT);
                                 break;
                         }
                     }
-
                     break;
                     
                 //Listar equipos
@@ -467,48 +475,221 @@ public class Sistema
         return true;
     }
     
-    private String causaCambio(int i)
+    private Equipo encuentraEquipo(int codigo)
     {
-        //lector.buffer();
-        String causa = "Sin causa";
-        for (int j = 0; j < this.datos.getActual().size(); j++)
+        for (int i = 0; i < this.datos.getActual().size(); i++)
         {
-            if(this.datos.getActual().get(j).getCodInterno() == i)
+            if (this.datos.getActual().get(i).getCodInterno() == codigo)
             {
-                this.menu.printCausaCambio();
-                int o = this.lector.leerEntero();
-
-                switch (o) {
-                    case 1:
-                        causa = "Plan Operativo.";
-                        return causa;
-                    case 2:
-                        causa = "Oportunidad Operativa";
-                        return causa;
-                    case 3:
-                        causa = "Daño en el Equipo";
-                        return causa;
-                    case 4:
-                        causa = "Otro";
-                        return causa;
-                    default:
-                        break;
-                }
+                Equipo e = this.datos.getActual().get(i);
+                //e.setCausaCambio(this.causa());
+                return e;
             }
         }
-
-        return causa;
+        return null;
     }
     
+    private void revisarCausa(int cod)
+    {
+        
+        if (cod == 0)
+        {
+            if(this.flags.isfPickUp())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethPickUp().add(e);
+                /*System.out.println("******************************************");
+                System.out.println("agregado el pickup this.datos.getActual().");
+                System.out.println("Eliminando el equipo: "+e.getNombre());
+                //System.out.println(this.borrarEquipo(cod));
+                System.out.println("******************************************");*/
+            }
+        }
+        else if (cod == 1)
+        {
+            if(this.flags.isF2daPrensa())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.getH2daPrensa().add(e);
+            }
+        }
+        else if (cod == 2)
+        {
+            if(this.flags.isF3raSuperior())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.getH3raSuperior().add(e);
+            }
+        }
+        else if (cod == 3)
+        {
+            if(this.flags.isF3raInferior())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.getH3raInferior().add(e);
+            }           
+        }
+        else if (cod == 4)
+        {
+            if(this.flags.isF3TelaSup())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.getH3TelaSup().add(e);
+            }     
+        }
+        else if (cod == 5)
+        {
+             if(this.flags.isF3TelaInf())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.getH3TelaInf().add(e);
+            }                
+        }
+        else if (cod == 6)
+        {
+            if(this.flags.isfManta())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethManta().add(e);
+            }                 
+        }
+        else if (cod == 7)
+        {
+            if(this.flags.isfTransversal())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethTransversal().add(e);
+            }                 
+        }
+        else if (cod == 8)
+        {
+            if(this.flags.isfExHumedo())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethExHumedo().add(e);
+            }                 
+        }
+        else if (cod == 9)
+        {
+            if(this.flags.isfExSeco())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethExSeco().add(e);
+            }                 
+        }
+        else if (cod == 10)
+        {
+            if(this.flags.isfCintaEn())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethCintaEn().add(e);
+            }                 
+        }
+        else if (cod == 11)
+        {
+            if(this.flags.isfCHP1())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethCHP1().add(e);
+            }                 
+        }
+        else if (cod == 12)
+        {
+            if(this.flags.isfCHP2())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethCHP2().add(e);
+            }                 
+        }
+        else if (cod == 13)
+        {
+            if(this.flags.isfCHP3())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethCHP3().add(e);
+            }                 
+        }
+        else if (cod == 14)
+        {
+            if(this.flags.isfCHS())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethCHS().add(e);
+            }                 
+        }
+        else if (cod == 15)
+        {
+            if(this.flags.isfCHT())
+            {
+                Equipo e = this.encuentraEquipo(cod);
+                this.datos.getActual().remove(e);
+                e.setCausaCambio(this.causa());
+                this.datos.gethCHT().add(e);
+            }                 
+        }
+    }
+    
+    private String causa()
+    {
+        String causa = "Sin causa";
+        this.menu.printCausaCambio();
+        int o = this.lector.leerEntero();
+
+        switch (o) {
+            case 1:
+                causa = "Plan Operativo.";
+                //this.encuentraEquipo(i);
+                return causa;
+            case 2:
+                causa = "Oportunidad Operativa";
+                return causa;
+            case 3:
+                causa = "Daño en el Equipo";
+                return causa;
+            case 4:
+                causa = "Otro";
+                return causa;
+            default:
+                break;
+        }
+        return causa;
+    }
     
     private Equipo completarEquipo(Equipo equipo)
     {
         
         System.out.print("Proveedor: ");
         String pro = this.lector.ingresarTexto();
-        System.out.println("paso el proveedor");
-        //System.out.println("Posi: ");
-        //String pos = this.lector.ingresarTexto();
         System.out.println("Fecha de ingreso: ");
         System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
         String fechaI = this.lector.ingresarTexto();
@@ -516,15 +697,9 @@ public class Sistema
         String idcp = this.lector.ingresarTexto();
         System.out.print("Plan Operativo en dias: ");
         int pop = this.lector.leerEntero();
-        System.out.print("Fecha de Salida agregada automaticamente: ");
-        //System.out.println("En formato dd-mm-aaaa, ejemplo: 11-02-2019. ");
-        //String fechaS = this.lector.ingresarTexto();
 
         
-        
         equipo.setProveedor(pro);
-        //equipo.setPosi(pos);
-        //equipo.setFechaIngreso(Calendar.getInstance());
         equipo.setIdCajaPaño(idcp);
         try
         {
@@ -536,6 +711,7 @@ public class Sistema
             Calendar calendarS = Calendar.getInstance();
             calendarS.setTime(dateI);
             calendarS.add(Calendar.DATE, pop);
+            System.out.print("Fecha de Salida agregada automaticamente: ");
             System.out.println(calendarS.getTime());
             equipo.setFechaSalida(calendarS);
             
@@ -548,21 +724,6 @@ public class Sistema
         }
 
         equipo.setPlanOperativo(pop);
-        /*
-        try
-        {
-            Date dateS = this.sdf.parse(fechaS);
-            Calendar calendarS = Calendar.getInstance();
-            calendarS.setTime(dateS);
-            equipo.setFechaSalida(calendarS);
-        }
-        catch(ParseException e)
-        {
-            this.menu.printErrorFecha();
-            equipo.setFechaSalida(null);
-        }*/
-        
-
         return equipo;
     }
     
@@ -570,7 +731,6 @@ public class Sistema
     {
         this.libro.setEquipos(this.datos.getActual());
         this.libro.setArrayPickUp(this.datos.gethPickUp());
-        //System.out.println("tamaño del pickup historico: "+datos.gethPickUp().size());
         this.libro.setArray2daPrensa(this.datos.getH2daPrensa());
         this.libro.setArray3raSuperior(this.datos.getH3raSuperior());
         this.libro.setArray3raInferior(this.datos.getH3raInferior());
@@ -580,222 +740,12 @@ public class Sistema
         this.libro.setArrayTransversal(this.datos.gethTransversal());
         this.libro.setArrayExHumedo(this.datos.gethExHumedo());
         this.libro.setArrayExSeco(this.datos.gethExSeco());
+        this.libro.setArrayCintaEn(this.datos.gethCintaEn());
+        this.libro.setArrayCHP1(this.datos.gethCHP1());
+        this.libro.setArrayCHP2(this.datos.gethCHP2());
+        this.libro.setArrayCHP3(this.datos.gethCHP3());
+        this.libro.setArrayCHS(this.datos.gethCHS());
+        this.libro.setArrayCHT(this.datos.gethCHT());
     }
     
-    private void existeAntiguo(int codigo)
-    {
-        //ArrayList<Equipo> actual = this.datos.getActual();
-        System.out.println("tamaño this.datos.getActual(): "+this.datos.getActual().size());
-        for (int i = 0; i < this.datos.getActual().size(); i++) 
-        {
-            //System.out.println("aaa");
-            if(this.datos.getActual().get(i).getCodInterno() == codigo && flags.isfPickUp() == true)
-            {
-                this.datos.getActual().get(i).setCausaCambio(this.causaCambio(i));
-                this.datos.gethPickUp().add(this.datos.getActual().get(i));
-                System.out.println("agregado el pickup this.datos.getActual().");
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && flags.isF2daPrensa()== true)
-            {
-                this.datos.getH2daPrensa().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);               
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isF3raSuperior()== true)
-            {
-                this.datos.getH3raSuperior().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isF3raInferior()== true)
-            {
-                this.datos.getH3raInferior().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isF3TelaSup()== true)
-            {
-                this.datos.getH3TelaSup().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isF3TelaInf()== true)
-            {
-                this.datos.getH3TelaInf().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfManta()== true)
-            {
-                this.datos.gethManta().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfTransversal()== true)
-            {
-                this.datos.gethTransversal().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfExHumedo()== true)
-            {
-                this.datos.gethExHumedo().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfExSeco()== true)
-            {
-                this.datos.gethExSeco().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                this.datos.getActual().remove(i);
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfCintaEn() == true)
-            {
-                this.datos.gethCintaEn().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfCHP1()== true)
-            {
-                this.datos.gethCHP1().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfCHP2()== true)
-            {
-                this.datos.gethCHP2().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfCHP3()== true)
-            {
-                this.datos.gethCHP3().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfCHS()== true)
-            {
-                this.datos.gethCHS().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-            }
-            else if(this.datos.getActual().get(i).getCodInterno() == codigo && this.flags.isfCHT()== true)
-            {
-                this.datos.gethCHT().add(this.datos.getActual().get(i));
-                System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-            }   
-            /*
-            switch (actual.get(i).getCodInterno()) {
-                case 0:
-                    if(this.flags.isfPickUp() == true)
-                    {
-                        this.datos.gethPickUp().add(this.datos.getActual().get(i));
-                        System.out.println("agregado el pickup actual.");
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                        
-                    }   break;
-                case 1:
-                    if(this.flags.isF2daPrensa()== true)
-                    {
-                        this.datos.getH2daPrensa().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 2:
-                    if(this.flags.isF3raSuperior()== true)
-                    {
-                        this.datos.getH3raSuperior().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 3:
-                    if(this.flags.isF3raInferior()== true)
-                    {
-                        this.datos.getH3raInferior().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 4:
-                    if(this.flags.isF3TelaSup()== true)
-                    {
-                        this.datos.getH3TelaSup().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 5:
-                    if(this.flags.isF3TelaInf()== true)
-                    {
-                        this.datos.getH3TelaInf().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 6:
-                    if(this.flags.isfManta()== true)
-                    {
-                        this.datos.gethManta().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 7:
-                    if(this.flags.isfTransversal()== true)
-                    {
-                        this.datos.gethTransversal().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 8:
-                    if(this.flags.isfExHumedo()== true)
-                    {
-                        this.datos.gethExHumedo().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 9:
-                    if(this.flags.isfExSeco()== true)
-                    {
-                        this.datos.gethExSeco().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                        this.datos.getActual().remove(i);
-                    }   break;
-                case 10:
-                    if(this.flags.isfCintaEn() == true)
-                    {
-                        this.datos.gethCintaEn().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                    }   break;
-                case 11:
-                    if(this.flags.isfCHP1()== true)
-                    {
-                        this.datos.gethCHP1().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                    }   break;
-                case 12:
-                    if(this.flags.isfCHP2()== true)
-                    {
-                        this.datos.gethCHP2().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                    }   break;
-                case 13:
-                    if(this.flags.isfCHP3()== true)
-                    {
-                        this.datos.gethCHP3().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                    }   break;
-                case 14:
-                    if(this.flags.isfCHS()== true)
-                    {
-                        this.datos.gethCHS().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                    }   break;
-                case 15:
-                    if(this.flags.isfCHT()== true)
-                    {
-                        this.datos.gethCHT().add(this.datos.getActual().get(i));
-                        System.out.println("Eliminando el equipo: "+this.datos.getActual().get(i).getNombre());
-                    }   break;
-                default:
-                    break;
-            }*/
-        }
-    }
-
 }
-          

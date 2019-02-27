@@ -187,7 +187,4 @@ public class Datos
     public void sethCHT(ArrayList<Equipo> hCHT) {
         this.hCHT = hCHT;
     }
-
-    
-            
 }
